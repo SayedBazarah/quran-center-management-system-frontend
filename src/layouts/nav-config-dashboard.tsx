@@ -51,14 +51,24 @@ export const navData: NavSectionProps['data'] = [
     subheader: 'تقارير',
     items: [
       { title: 'لوحة التحكم', path: paths.dashboard.root, icon: ICONS.ecommerce },
-      { title: 'تقرير عام', path: paths.dashboard.reports.root, icon: ICONS.ecommerce },
-      { title: 'التقارير المالية', path: paths.dashboard.reports.finance, icon: ICONS.ecommerce },
+      { title: 'التقارير', path: paths.dashboard.reports.root, icon: ICONS.ecommerce },
+      { title: 'السجلات', path: paths.dashboard.reports.logs, icon: ICONS.ecommerce },
     ],
   },
   {
     subheader: 'ادارة الطلاب والمدرسين',
     items: [
       { title: 'الطلاب', path: paths.dashboard.student.root, icon: ICONS.ecommerce },
+      {
+        title: 'طلاب بنتظار القبول',
+        path: paths.dashboard.student.acceptStudents,
+        icon: ICONS.ecommerce,
+      },
+      {
+        title: 'دورات بنتظار القبول',
+        path: paths.dashboard.student.acceptEnrollment,
+        icon: ICONS.ecommerce,
+      },
       { title: 'المدرسين', path: paths.dashboard.teacher.root, icon: ICONS.job },
       {
         title: 'المراحل التعليمية',

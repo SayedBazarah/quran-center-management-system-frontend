@@ -15,7 +15,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 type DateInput = Dayjs | Date | string | number | null | undefined;
 
-function normalizeDateValue(value: DateInput): Dayjs | null {
+export function normalizeDateValue(value: DateInput): Dayjs | null {
   if (dayjs.isDayjs(value)) return value;
 
   const parsed = value ? dayjs(value) : null;

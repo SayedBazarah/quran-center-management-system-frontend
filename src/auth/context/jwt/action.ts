@@ -26,7 +26,9 @@ export const signInWithPassword = async ({ name, password }: SignInParams): Prom
   try {
     const params = { username: name, password };
 
-    await axios.post(endpoints.auth.signIn, params);
+    await axios.post(endpoints.auth.signIn, params, {
+      withCredentials: true,
+    });
   } catch (error) {
     console.error('Error during sign in:', error);
     throw error;
@@ -70,7 +72,7 @@ export const signUp = async ({
  *************************************** */
 export const signOut = async (): Promise<void> => {
   try {
-    await axios.get(endpoints.auth.signOut);
+    await axios.post(endpoints.auth.signOut);
     await setSession(null);
   } catch (error) {
     console.error('Error during sign out:', error);

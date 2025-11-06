@@ -5,7 +5,6 @@ import axios from 'axios';
 import { CONFIG } from 'src/global-config';
 
 // ----------------------------------------------------------------------
-
 const axiosInstance = axios.create({
   baseURL: CONFIG.serverUrl,
   withCredentials: true, // <-- send cookies automatically
@@ -19,13 +18,13 @@ const axiosInstance = axios.create({
  *
  *
  */
-axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem('accessToken');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+// axiosInstance.interceptors.request.use((config) => {
+//   const token = localStorage.getItem('accessToken');
+//   if (token) {
+//     config.headers.Authorization = `Bearer ${token}`;
+//   }
+//   return config;
+// });
 
 axiosInstance.interceptors.response.use(
   (response) => response,
@@ -63,24 +62,43 @@ export const endpoints = {
     signIn: '/auth/sign-in',
     signOut: '/auth/sign-out',
   },
+  reports: {
+    root: '/analytics/',
+    logs: '/analytics/logs',
+  },
   student: {
-    new: '/student/create',
-    parent: '/student/parent',
-    list: '/student/list',
-    update: '/student/update/:id',
-    details: '/student/details/:id',
-    enroll: '/student/enrollment/create/:id', // Single enroll (just one student)
-    updateEnroll: '/student/enrollment/update/:id', // Single enroll (just one student)
-    enrollLog: '/student/enrollment/log/:id', // Single enroll (just one student)
-    closeEnrollment: '/student/enrollment/close/:id', // Single enroll (just one student)
-    pendingEnrollments: '/student/enrollment/pending',
-    acceptEnrollment: '/student/enrollment/accept/:id',
+    new: '/students',
+    list: '/students?all=true',
+    update: '/students/:id',
+    delete: '/students/:id',
+    // -------------------
+    pendingList: '/students/status/pending/list',
+    status: '/students/:id/status',
+    // -------------------
+    enroll: '/students/enrollment/create/:id', // Single enroll (just one students)
+    acceptEnroll: '/enrollments/:enrollmentId/status', // Single enroll (just one students)
+
+    // -------------------
+    parent: '/students/parent',
+    details: '/students/:id',
+    updateEnroll: '/students/enrollment/update/:id', // Single enroll (just one students)
+    enrollLog: '/enrollments/log/:id', // Single enroll (just one students)
+    closeEnrollment: '/students/enrollment/close/:id', // Single enroll (just one students)
+    pendingEnrollments: '/students/enrollment/pending',
+    acceptEnrollment: '/students/enrollment/accept/:id',
+  },
+  enrollments: {
+    pendingLst: '/enrollments/pending',
+    create: '/enrollments/:id',
+    update: '/enrollments/:id',
+    studentList: '/enrollments/by-student/:studentId',
+    createLog: '/enrollments/:studentId/:enrollmentId/log',
   },
   course: {
-    new: '/course/create',
-    list: '/course/list',
-    update: '/course/update/:id',
-    delete: '/course/delete/:id',
+    new: '/courses',
+    list: '/courses',
+    update: '/courses/:id',
+    delete: '/courses/:id',
   },
   round: {
     new: '/round',
@@ -90,33 +108,28 @@ export const endpoints = {
     bulkEnroll: '/round/bulk-enroll', // Bulk enroll
   },
   teacher: {
-    new: '/teacher/create',
-    list: '/teacher/list',
-    update: '/teacher/update/:id',
-    delete: '/teacher/delete/:id',
-    details: '/teacher/details/:id',
+    new: '/teachers',
+    list: '/teachers',
+    update: '/teachers/:id',
+    delete: '/teachers/:id',
   },
   admin: {
-    list: '/admin/list',
-    new: '/admin/create',
-    update: '/admin/update/:id',
-    details: '/admin/:id',
-    delete: '/admin/delete/:id',
+    list: '/admins',
+    new: '/admins',
+    update: '/admins/:id',
+    delete: '/admins/:id',
   },
   role: {
-    list: '/role/list',
-    new: '/role/create',
-    update: '/role/update/:id',
-    delete: '/role/delete/:id',
-    details: '/role/:id',
-    permission: '/role/permissions',
+    list: '/roles',
+    new: '/roles',
+    update: '/roles/:id',
+    delete: '/roles/:id',
+    permission: '/roles/permissions',
   },
   branch: {
-    list: '/branch/list',
-    new: '/branch/create',
-    update: '/branch/update/:id',
-    delete: '/branch/delete/:id',
-    details: '/branch/:id',
-    permission: '/branch/permissions',
+    list: '/branches',
+    new: '/branches',
+    update: '/branches/:id',
+    delete: '/branches/:id',
   },
 };

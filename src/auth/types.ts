@@ -6,8 +6,8 @@ export type UserType = {
   email: string;
   username: string;
   avatar: string;
-  role: IRoleItem;
-  branch: IBranchItem;
+  roleId: IRoleItem;
+  branchId: IBranchItem;
 } | null;
 
 export type AuthState = {
@@ -16,7 +16,8 @@ export type AuthState = {
 };
 
 export type AuthContextValue = {
-  user: UserType;
+  user: Partial<IAdminItem> | null;
+  permissions: string[];
   loading: boolean;
   authenticated: boolean;
   unauthenticated: boolean;

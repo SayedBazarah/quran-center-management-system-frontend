@@ -1,27 +1,16 @@
 'use client';
 
 import type { Theme, SxProps } from '@mui/material/styles';
-
-import { m } from 'framer-motion';
-
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-
+import { m } from 'framer-motion';
 import { ForbiddenIllustration } from 'src/assets/illustrations';
-
 import { varBounce, MotionContainer } from 'src/components/animate';
-
-// ----------------------------------------------------------------------
-
-/**
- * NOTE:
- * This component is for reference only.
- * You can customize the logic and conditions to better suit your application's requirements.
- */
+import { hasAnyRole } from 'src/utils/has-role';
+import { useAuthContext } from '../hooks';
 
 export type RoleBasedGuardProp = {
   sx?: SxProps<Theme>;
-  currentRole: string[];
   hasContent?: boolean;
   allowedRoles: string | string[];
   children: React.ReactNode;
@@ -30,11 +19,14 @@ export type RoleBasedGuardProp = {
 export function RoleBasedGuard({
   sx,
   children,
-  hasContent,
-  currentRole,
+  hasContent = true,
   allowedRoles,
 }: RoleBasedGuardProp) {
-  if (currentRole && allowedRoles && !currentRole.some((role) => allowedRoles.includes(role))) {
+  const { user, permissions } = useAuthContext();
+  const currentRolePermissions = false;
+  const isAllowed = false;
+
+  if (!isAllowed) {
     return hasContent ? (
       <Container
         component={MotionContainer}
@@ -45,13 +37,11 @@ export function RoleBasedGuard({
             غير مسموح
           </Typography>
         </m.div>
-
         <m.div variants={varBounce('in')}>
           <Typography sx={{ color: 'text.secondary' }}>
             لا تملك صلاحية الوصول لهذه الصفحة
           </Typography>
         </m.div>
-
         <m.div variants={varBounce('in')}>
           <ForbiddenIllustration sx={{ my: { xs: 5, sm: 10 } }} />
         </m.div>
@@ -59,5 +49,5 @@ export function RoleBasedGuard({
     ) : null;
   }
 
-  return <> {children} </>;
+  return <>{children}</>;
 }

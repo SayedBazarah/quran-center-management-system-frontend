@@ -16,10 +16,27 @@ export const schemaUtils = {
   phoneNumber: (props?: { error?: SchemaErrorMessages; isValid?: (val: string) => boolean }) =>
     z
       .string()
-      .min(1, { error: props?.error?.required ?? 'Phone number is required!' })
+      .min(1, { error: props?.error?.required ?? 'رقم الهاتف مطلوب!' })
       .refine((val) => props?.isValid?.(val), {
-        error: props?.error?.invalid ?? 'Invalid phone number!',
+        error: props?.error?.invalid ?? 'رقم الهاتف غير صالح!',
       }),
+  optionalPhoneNumber: (props?: {
+    error?: SchemaErrorMessages;
+    isValid?: (val: string) => boolean;
+    optional?: boolean;
+  }) =>
+    z
+      .string()
+      .optional()
+      .refine(
+        (val) => {
+          if (props?.optional) return true;
+          return props?.isValid?.(`${val}`);
+        },
+        {
+          error: props?.error?.invalid ?? 'رقم الهاتف غير صالح!',
+        }
+      ),
 
   /**
    * Email
@@ -29,38 +46,38 @@ export const schemaUtils = {
     z.email({
       error: ({ input, code }) =>
         input && code.startsWith('invalid')
-          ? (props?.error?.invalid ?? 'Email must be a valid email address!')
-          : (props?.error?.required ?? 'Email is required!'),
+          ? (props?.error?.invalid ?? 'البريد الالكتروني غير صالح!')
+          : (props?.error?.required ?? 'البريد الالكتروني مطلوب!'),
     }),
 
   /**
    * Date
    * Apply for date pickers.
    */
+  /**
+   * Date
+   * Apply for date pickers.
+   */
   date: (props?: { error?: SchemaErrorMessages }) =>
-    z.preprocess(
-      (val) => (val === undefined ? null : val), // Process input value before validation
-      z.union([z.string(), z.number(), z.date(), z.null()]).check((ctx) => {
-        const value = ctx.value;
-
-        if (value === null || value === '') {
-          ctx.issues.push({
-            code: 'custom',
-            message: props?.error?.required ?? 'Date is required!',
-            input: value,
+    z
+      .union([z.string(), z.number(), z.date()])
+      .nullable()
+      .superRefine((val, ctx) => {
+        if (val === null || val === '') {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: props?.error?.required ?? 'التاريخ مطلوب!',
           });
           return;
         }
 
-        if (!dayjs(value).isValid()) {
-          ctx.issues.push({
-            code: 'custom',
-            message: props?.error?.invalid ?? 'Invalid date!',
-            input: value,
+        if (!dayjs(val).isValid()) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: props?.error?.invalid ?? 'التاريخ غير صالح!',
           });
         }
-      })
-    ),
+      }),
 
   /**
    * Editor

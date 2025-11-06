@@ -60,6 +60,26 @@ export function RoutingTreeView() {
               >
                 المدرسين
               </Button>
+              <Button
+                href={paths.dashboard.student.acceptStudents}
+                variant="contained"
+                color="warning"
+                startIcon={<Iconify icon="solar:user-id-bold" />}
+                aria-label="Go to dashboard"
+                sx={{ justifyContent: 'flex-start', py: 1.25 }}
+              >
+                قبول الطلاب
+              </Button>
+              <Button
+                href={paths.dashboard.student.acceptEnrollment}
+                variant="contained"
+                color="secondary"
+                startIcon={<Iconify icon="solar:user-id-bold" />}
+                aria-label="Go to dashboard"
+                sx={{ justifyContent: 'flex-start', py: 1.25 }}
+              >
+                قبول الدورات
+              </Button>
             </Box>
           </Stack>
         </CardContent>

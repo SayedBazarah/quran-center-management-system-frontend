@@ -27,8 +27,7 @@ export function AuthProvider({ children }: Props) {
   const checkUserSession = useCallback(async () => {
     try {
       const res = await axios.get(endpoints.auth.me);
-      const user = res.data;
-      setState({ user: { ...user }, loading: false });
+      setState({ user: { ...res.data?.user }, loading: false });
     } catch (error) {
       console.error(error);
       setState({ user: null, loading: false });
@@ -49,6 +48,7 @@ export function AuthProvider({ children }: Props) {
   const memoizedValue = useMemo(
     () => ({
       user: state.user ? { ...state.user } : null,
+      permissions: state.user?.roleId?.permissions?.map((p) => p.code) || [],
       checkUserSession,
       loading: status === 'loading',
       authenticated: status === 'authenticated',

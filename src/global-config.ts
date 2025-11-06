@@ -32,7 +32,7 @@ export type ConfigValue = {
 // ----------------------------------------------------------------------
 
 export const CONFIG: ConfigValue = {
-  appName: 'Minimal UI',
+  appName: 'مركز اقرا',
   appVersion: packageJson.version,
   serverUrl: process.env.NEXT_PUBLIC_SERVER_URL ?? '',
   assetsDir: process.env.NEXT_PUBLIC_ASSETS_DIR ?? '',
@@ -82,3 +82,39 @@ export const CONFIG: ConfigValue = {
     key: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
   },
 };
+
+export enum GlobalPermissionCode {
+  CreateAdmin = 'CREATE.ADMIN',
+  ReadAdmin = 'READ.ADMIN',
+  DeleteAdmin = 'DELETE.ADMIN',
+  UpdateAdmin = 'UPDATE.ADMIN',
+  // ---
+  CreateTeacher = 'CREATE.TEACHER',
+  ReadTeacher = 'READ.TEACHER',
+  DeleteTeacher = 'DELETE.TEACHER',
+  UpdateTeacher = 'UPDATE.TEACHER',
+  // ---
+  CreateStudent = 'CREATE.STUDENT',
+  ReadStudent = 'READ.STUDENT',
+  DeleteStudent = 'DELETE.STUDENT',
+  UpdateStudent = 'UPDATE.STUDENT',
+  AcceptStudent = 'ACCEPT.STUDENT',
+  AcceptEnrollment = 'ACCEPT.ENROLLMENT',
+  // ---
+  CreateCourse = 'CREATE.COURSE',
+  ReadCourse = 'READ.COURSE',
+  DeleteCourse = 'DELETE.COURSE',
+  UpdateCourse = 'UPDATE.COURSE',
+  // ---
+  CreateBranch = 'CREATE.BRANCH',
+  ReadBranch = 'READ.BRANCH',
+  DeleteBranch = 'DELETE.BRANCH',
+  UpdateBranch = 'UPDATE.BRANCH',
+  // ---
+  CreateRole = 'CREATE.ROLE',
+  ReadRole = 'READ.ROLE',
+  DeleteRole = 'DELETE.ROLE',
+  UpdateRole = 'UPDATE.ROLE',
+  // ---
+  ReadReports = 'READ.REPORTS',
+}

@@ -45,6 +45,7 @@ export const paths = {
     root: ROOTS.DASHBOARD,
     reports: {
       root: `${ROOTS.DASHBOARD}/reports`,
+      logs: `${ROOTS.DASHBOARD}/log`,
       finance: `${ROOTS.DASHBOARD}/reports/:id`,
     },
     teacher: {
@@ -53,7 +54,9 @@ export const paths = {
     },
     student: {
       root: `${ROOTS.DASHBOARD}/student`,
-      details: `${ROOTS.DASHBOARD}/student/:id`,
+      details: `${ROOTS.DASHBOARD}/student/details/:id`,
+      acceptStudents: `${ROOTS.DASHBOARD}/student/accept-new-students`,
+      acceptEnrollment: `${ROOTS.DASHBOARD}/student/accept-new-enrollment`,
     },
     course: {
       root: `${ROOTS.DASHBOARD}/course`,
