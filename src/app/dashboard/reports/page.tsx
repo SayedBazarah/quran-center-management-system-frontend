@@ -1,11 +1,13 @@
 import { Suspense } from 'react';
-import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
-import { LoadingScreen } from 'src/components/loading-screen';
+
 import { CONFIG } from 'src/global-config';
 import { DashboardContent } from 'src/layouts/dashboard';
-import { DateRangeFilter } from 'src/sections/dashboard/date-range-filter';
+
+import { LoadingScreen } from 'src/components/loading-screen';
+import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
 import { GlobaSystemReportView } from 'src/sections/dashboard/view';
+import { DateRangeFilter } from 'src/sections/dashboard/date-range-filter';
 
 // ----------------------------------------------------------------------
 

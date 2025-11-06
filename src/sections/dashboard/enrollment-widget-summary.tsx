@@ -1,4 +1,5 @@
 'use client';
+
 import type { CardProps } from '@mui/material/Card';
 import type { PaletteColorKey } from 'src/theme/core';
 

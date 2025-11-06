@@ -3,40 +3,38 @@
 // ----------------------------------------------------------------------
 
 import type { TableHeadCellProps } from 'src/components/table';
-import {
-  EnrollmentStatus,
-  IEnrollmentWithStudent,
-  StudentStatus,
-  type IEnrollmentItem,
-  type IStudentItem,
-  type IStudentTableFilters,
-} from 'src/types/student';
 
 import { useCallback } from 'react';
+import { varAlpha } from 'minimal-shared/utils';
 import { useBoolean, useSetState } from 'minimal-shared/hooks';
 
 import {
   Box,
+  Tab,
   Card,
+  Tabs,
   Table,
   Button,
   Tooltip,
+  useTheme,
   TableBody,
   IconButton,
-  Tabs,
-  Tab,
-  useTheme,
 } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 
+import { hasAnyRole } from 'src/utils/has-role';
+
+import axios, { endpoints } from 'src/lib/axios';
 import { useGetStudents } from 'src/actions/student';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { GlobalPermissionCode } from 'src/global-config';
 
+import { Label } from 'src/components/label';
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
+import { NotAllowedView } from 'src/components/not-allowed';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
@@ -52,19 +50,19 @@ import {
   TablePaginationCustom,
 } from 'src/components/table';
 
-import { RoleBasedGuard } from 'src/auth/guard';
 import { useAuthContext } from 'src/auth/hooks';
+
+import {
+  StudentStatus,
+  EnrollmentStatusList,
+  type IStudentTableFilters,
+  type IEnrollmentWithStudent,
+} from 'src/types/student';
 
 import { StudentTableRow } from '../student-table-row';
 import { StudentTableToolbar } from '../student-table-toolbar';
 import { StudentQuickEditForm } from '../student-edit-new-form';
 import { StudentTableFiltersResult } from '../student-table-filters-result';
-import { Label } from 'src/components/label';
-import { varAlpha } from 'minimal-shared/utils';
-import { stat } from 'fs';
-import { NotAllowedView } from 'src/components/not-allowed';
-import { hasAnyRole } from 'src/utils/has-role';
-import axios, { endpoints } from 'src/lib/axios';
 
 const TABLE_HEAD: TableHeadCellProps[] = [
   { id: 'name', label: 'الاسم' },
@@ -299,14 +297,7 @@ export function StudentListView() {
               admins,
               teachers,
               branches,
-              enrollmentStatus: [
-                { value: EnrollmentStatus.PENDING, label: 'بنتظار القبول' },
-                { value: EnrollmentStatus.ACTIVE, label: 'يدرس' },
-                { value: EnrollmentStatus.LATE, label: 'متاخر' },
-                { value: EnrollmentStatus.DROPOUT, label: 'ترك المركز' },
-                { value: EnrollmentStatus.GRADUATED, label: 'انتهت' },
-                { value: EnrollmentStatus.REJECTED, label: 'مرفوض' },
-              ],
+              enrollmentStatus: EnrollmentStatusList,
             }}
           />
 
@@ -443,9 +434,14 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
   }
 
   if (teacher.length) {
-    inputData = inputData.filter((row) => {
-      return teacher.includes(`${row.currentEnrollment?.teacherId?._id}`);
-    });
+    inputData = inputData.filter((row) =>
+      teacher.includes(`${row.currentEnrollment?.teacherId?._id}`)
+    );
+  }
+  if (enrollmentStatus.length) {
+    inputData = inputData.filter((row) =>
+      enrollmentStatus.includes(`${row.currentEnrollment?.status}`)
+    );
   }
 
   if (name) {

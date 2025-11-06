@@ -1,5 +1,5 @@
-import type { IAdminTableFilters } from 'src/types/admin';
 import type { UseSetStateReturn } from 'minimal-shared/hooks';
+import type { IAdminTableFilters } from 'src/types/admin';
 import type { FiltersResultProps } from 'src/components/filters-result';
 
 import { useCallback } from 'react';

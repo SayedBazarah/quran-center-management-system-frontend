@@ -1,9 +1,12 @@
 // ----------------------------------------------------------------------
 
+import type { SWRConfiguration } from 'swr';
+import type { IEnrollmentLogItem } from 'src/types/student';
+
+import useSWR from 'swr';
 import { useMemo } from 'react';
-import { endpoints, fetcher } from 'src/lib/axios';
-import { IEnrollmentLogItem } from 'src/types/student';
-import useSWR, { SWRConfiguration } from 'swr';
+
+import { fetcher, endpoints } from 'src/lib/axios';
 
 const swrOptions: SWRConfiguration = {
   revalidateIfStale: true,

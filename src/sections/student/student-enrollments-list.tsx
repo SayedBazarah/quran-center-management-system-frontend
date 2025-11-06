@@ -1,20 +1,18 @@
 import { useState, useCallback } from 'react';
-import { useBoolean } from 'minimal-shared/hooks';
 
 import { Box, Chip, Stack, Button, Typography } from '@mui/material';
 
 import axios, { endpoints } from 'src/lib/axios';
+import { useGetStudentEnrollments } from 'src/actions/student';
 
 import { Scrollbar } from 'src/components/scrollbar';
+import { LoadingScreen } from 'src/components/loading-screen';
 
 import { getErrorMessage } from 'src/auth/utils';
 
 import { EnrollmentStatus, type IStudentItem, type IEnrollmentItem } from 'src/types/student';
 
 import { EnrollmentEditForm } from './enrollment-form';
-import { NewEnrollmentForm } from './new-enrollemtn-form';
-import { useGetStudentById, useGetStudentEnrollments } from 'src/actions/student';
-import { LoadingScreen } from 'src/components/loading-screen';
 
 type Props = {
   student: IStudentItem;
@@ -47,7 +45,7 @@ export default function StudentEnrollments({ student }: Props) {
     <>
       <Scrollbar>
         <Stack spacing={2}>
-          <Stack direction="row" justifyContent="end"></Stack>
+          <Stack direction="row" justifyContent="end" />
         </Stack>
       </Scrollbar>
       {enrollments.map((item) => (

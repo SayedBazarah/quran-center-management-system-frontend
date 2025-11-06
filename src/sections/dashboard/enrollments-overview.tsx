@@ -1,15 +1,10 @@
 'use client';
-import type { CardProps } from '@mui/material/Card';
-import type { LinearProgressProps } from '@mui/material/LinearProgress';
 
-import { varAlpha } from 'minimal-shared/utils';
+import type { CardProps } from '@mui/material/Card';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import LinearProgress from '@mui/material/LinearProgress';
-
-import { fPercent, fCurrency } from 'src/utils/format-number';
 
 // ----------------------------------------------------------------------
 
@@ -51,11 +46,6 @@ type ItemProps = {
 };
 
 function Item({ progress }: ItemProps) {
-  const color: LinearProgressProps['color'] =
-    (progress.label === 'Total income' && 'info') ||
-    (progress.label === 'Total expenses' && 'warning') ||
-    'primary';
-
   return (
     <div>
       <Box

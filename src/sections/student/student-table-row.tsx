@@ -1,35 +1,29 @@
-import {
-  EnrollmentStatus,
-  IEnrollmentWithStudent,
-  StudentStatus,
-  type IEnrollmentItem,
-  type IStudentItem,
-} from 'src/types/student';
+import type { IEnrollmentWithStudent } from 'src/types/student';
 
 import { useBoolean, usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import { Avatar, Badge, Chip, Collapse, Paper, useTheme } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
+import { Chip, Paper, Collapse } from '@mui/material';
 
 import { RouterLink } from 'src/routes/components';
+
+import { fDate } from 'src/utils/format-time';
 
 import { Iconify } from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomPopover } from 'src/components/custom-popover';
 
-import { StudentQuickEditForm } from './student-edit-new-form';
-import { fDate, fDateTime } from 'src/utils/format-time';
-import { EnrollmentEditForm } from './enrollment-form';
+import { StudentStatus, EnrollmentStatus } from 'src/types/student';
+
 import { NewEnrollmentForm } from './new-enrollemtn-form';
 
 // ----------------------------------------------------------------------
@@ -51,15 +45,10 @@ export function StudentTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const theme = useTheme();
   const collapseRow = useBoolean();
   const menuActions = usePopover();
   const confirmDialog = useBoolean();
   const newEnrollmentForm = useBoolean();
-
-  // const teacherNames = row.enrollments
-  //   .map((enrollment) => enrollment.teacher?.name)
-  //   .filter(Boolean);
 
   const renderAddEnrollmentForm = () => (
     <NewEnrollmentForm

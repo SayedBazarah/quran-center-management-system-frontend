@@ -1,32 +1,31 @@
 'use client';
 
+import { useBoolean } from 'minimal-shared/hooks';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-import { Box, Tab, Card, Tabs, useTheme, Button } from '@mui/material';
+import { Box, Tab, Card, Tabs, Button, useTheme } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
+
+import { hasAnyRole } from 'src/utils/has-role';
 
 import { useGetStudentById } from 'src/actions/student';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { GlobalPermissionCode } from 'src/global-config';
 
 import { Iconify } from 'src/components/iconify';
+import { NotAllowedView } from 'src/components/not-allowed';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
 import { NotFoundView } from 'src/sections/error';
 
-import { RoleBasedGuard } from 'src/auth/guard';
 import { useAuthContext } from 'src/auth/hooks';
 
 import StudentDetails from '../student-details';
-import { StudentParentForm } from '../student-parent-form';
-import StudentEnrollments from '../student-enrollments-list';
-import { hasAnyRole } from 'src/utils/has-role';
-import { NotAllowedView } from 'src/components/not-allowed';
-import { useBoolean } from 'minimal-shared/hooks';
 import { NewEnrollmentForm } from '../new-enrollemtn-form';
+import StudentEnrollments from '../student-enrollments-list';
 
 type Props = {
   id: string;

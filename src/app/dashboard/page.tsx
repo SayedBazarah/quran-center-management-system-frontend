@@ -1,6 +1,5 @@
 import { CONFIG } from 'src/global-config';
 
-import { BlankView } from 'src/sections/blank/view';
 import { RoutingTreeView } from 'src/sections/dashboard/view';
 
 // ----------------------------------------------------------------------

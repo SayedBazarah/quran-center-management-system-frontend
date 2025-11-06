@@ -1,9 +1,8 @@
-import type { IAdminItem, IBranchItem } from 'src/types/admin';
+import type { IAdminItem } from 'src/types/admin';
 
 import { useBoolean, usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
-import { Avatar, Badge, Chip } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import MenuList from '@mui/material/MenuList';
@@ -13,12 +12,12 @@ import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 
+import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomPopover } from 'src/components/custom-popover';
 
 import { AdminQuickEditForm } from './admin-edit-new-form';
-import { Label } from 'src/components/label';
 
 // ----------------------------------------------------------------------
 

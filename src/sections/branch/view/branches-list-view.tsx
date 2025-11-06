@@ -10,6 +10,8 @@ import { Box, Card, Table, Button, Tooltip, TableBody, IconButton } from '@mui/m
 
 import { paths } from 'src/routes/paths';
 
+import { hasAnyRole } from 'src/utils/has-role';
+
 import axios, { endpoints } from 'src/lib/axios';
 import { useGetBranches } from 'src/actions/branch';
 import { DashboardContent } from 'src/layouts/dashboard';
@@ -18,6 +20,7 @@ import { GlobalPermissionCode } from 'src/global-config';
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
+import { NotAllowedView } from 'src/components/not-allowed';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 import {
   useTable,
@@ -32,14 +35,11 @@ import {
 } from 'src/components/table';
 
 import { useAuthContext } from 'src/auth/hooks';
-import { RoleBasedGuard } from 'src/auth/guard';
 
 import { BranchTableRow } from '../branch-table-row';
 import { BranchTableToolbar } from '../branch-table-toolbar';
 import { BranchQuickEditForm } from '../branch-edit-new-form';
 import { BranchTableFiltersResult } from '../branch-table-filters-result';
-import { hasAnyRole } from 'src/utils/has-role';
-import { NotAllowedView } from 'src/components/not-allowed';
 
 // ----------------------------------------------------------------------
 

@@ -1,34 +1,31 @@
 import type { IStudentItem } from 'src/types/student';
 
-import dayjs from 'dayjs';
 import * as zod from 'zod';
 import { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Stack, Alert, MenuItem, Box } from '@mui/material';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { Box, Stack, Alert, MenuItem } from '@mui/material';
 
+import { hasAnyRole } from 'src/utils/has-role';
 import { appendFormData } from 'src/utils/append-form-data';
 
 import axios, { endpoints } from 'src/lib/axios';
 import { useGetAdmins } from 'src/actions/admin';
 import { useGetBranches } from 'src/actions/branch';
-
-import { Form, Field, schemaUtils } from 'src/components/hook-form';
-import { RHFUploadAvatar } from 'src/components/hook-form/rhf-upload';
-
-import { getErrorMessage } from 'src/auth/utils';
-import { hasAnyRole } from 'src/utils/has-role';
-import { useAuthContext } from 'src/auth/hooks';
 import { GlobalPermissionCode } from 'src/global-config';
+
 import { NotAllowedDialog } from 'src/components/not-allowed';
+import { Form, Field, schemaUtils } from 'src/components/hook-form';
+
+import { useAuthContext } from 'src/auth/hooks';
+import { getErrorMessage } from 'src/auth/utils';
 
 // ----------------------------------------------------------------------
 
@@ -100,7 +97,6 @@ export function StudentQuickEditForm({
   const {
     reset,
     handleSubmit,
-    control,
     formState: { isSubmitting },
   } = methods;
 

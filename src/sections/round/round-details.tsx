@@ -12,7 +12,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import axios, { endpoints } from 'src/lib/axios';
 import { useGetTeachers } from 'src/actions/teacher';
 
-import { Form, Field, schemaHelper } from 'src/components/hook-form';
+import { Form, Field, schemaUtils } from 'src/components/hook-form';
 
 import { getErrorMessage } from 'src/auth/utils';
 
@@ -21,16 +21,16 @@ export type RoundQuickEditSchemaType = zod.infer<typeof RoundQuickEditSchema>;
 
 export const RoundQuickEditSchema = zod
   .object({
-    startDate: schemaHelper.date({
-      message: {
+    startDate: schemaUtils.date({
+      error: {
         required: 'تاريخ الميلاد مطلوب!',
-        invalid_type: 'تاريخ الميلاد غير صحيح !',
+        invalid: 'تاريخ الميلاد غير صحيح !',
       },
     }),
-    endDate: schemaHelper.date({
-      message: {
+    endDate: schemaUtils.date({
+      error: {
         required: 'تاريخ الميلاد مطلوب!',
-        invalid_type: 'تاريخ الميلاد غير صحيح !',
+        invalid: 'تاريخ الميلاد غير صحيح !',
       },
     }),
     teacher: zod.object({

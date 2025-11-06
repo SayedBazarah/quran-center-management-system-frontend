@@ -1,5 +1,5 @@
 import { CONFIG } from 'src/global-config';
-import { BlankView } from 'src/sections/blank/view';
+
 import { StudentDetailsView } from 'src/sections/student/view';
 
 // import { StudentDetailsView } from 'src/sections/student/view';

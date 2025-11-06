@@ -1,6 +1,7 @@
 import type { ICourseItem } from './course';
 import type { ITeacherItem } from './teacher';
 import type { IAdminItem, IBranchItem } from './admin';
+
 export enum StudentStatus {
   ACTIVE = 'active',
   PENDING = 'pending',

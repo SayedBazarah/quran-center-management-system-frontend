@@ -1,11 +1,15 @@
 'use client';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import { useGetLogs } from 'src/actions/log';
-import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
-import { DashboardContent } from 'src/layouts/dashboard';
+
 import { fDateTime } from 'src/utils/format-time';
+
+import { useGetLogs } from 'src/actions/log';
+import { DashboardContent } from 'src/layouts/dashboard';
+
+import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
 export function LogsView() {
   const { logs } = useGetLogs();

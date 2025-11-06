@@ -11,9 +11,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
 import axios, { endpoints } from 'src/lib/axios';
-import { useGetStudents } from 'src/actions/student';
 
-import { Form, Field } from 'src/components/hook-form';
+import { Form } from 'src/components/hook-form';
 
 import { getErrorMessage } from 'src/auth/utils';
 
@@ -40,7 +39,6 @@ type Props = {
 
 export function AddStudents({ roundId, open, refetch, onClose }: Props) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { students } = useGetStudents();
 
   const defaultValues: AddStudentQuickEditSchemaType = {
     students: [],
@@ -94,17 +92,8 @@ export function AddStudents({ roundId, open, refetch, onClose }: Props) {
 
       <Form methods={methods} onSubmit={onSubmit}>
         <DialogContent sx={{ py: 1 }}>
-          <Stack direction="row" spacing={2}>
-            <Field.Autocomplete
-              multiple
-              name="students"
-              label="الطلاب"
-              options={students.map((c) => ({ id: c.id, name: c.name }))}
-              getOptionLabel={(option) => option.name}
-              sx={{ width: 1 }}
-            />
-          </Stack>
-        </DialogContent>{' '}
+          <Stack direction="row" spacing={2} />
+        </DialogContent>
         <DialogActions>
           <Button variant="outlined" onClick={onClose}>
             الغاء

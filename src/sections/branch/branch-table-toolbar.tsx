@@ -1,5 +1,5 @@
-import type { IBranchTableFilters} from 'src/types/admin';
 import type { UseSetStateReturn } from 'minimal-shared/hooks';
+import type { IBranchTableFilters} from 'src/types/admin';
 
 import { useCallback } from 'react';
 

@@ -1,18 +1,20 @@
+import { cookies } from 'next/headers';
+
 import Box from '@mui/material/Box';
-import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
-import { DashboardContent } from 'src/layouts/dashboard';
-import { CourseWidgetSummary } from '../enrollment-widget-summary';
+import Accordion from '@mui/material/Accordion';
+import Typography from '@mui/material/Typography';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+
 import { CONFIG } from 'src/global-config';
 import axiosInstance, { endpoints } from 'src/lib/axios';
-import { cookies } from 'next/headers';
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import { EnrollmentsOverview } from '../enrollments-overview';
-import { EnrollmentStatus, EnrollmentStatusLabels, EnrollmentStatusList } from 'src/types/student';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
+
 import { Iconify } from 'src/components/iconify';
-import AccordionDetails from '@mui/material/AccordionDetails';
+
+import { EnrollmentStatus, EnrollmentStatusLabels } from 'src/types/student';
+
+import { EnrollmentsOverview } from '../enrollments-overview';
+import { CourseWidgetSummary } from '../enrollment-widget-summary';
 
 interface ReportData {
   branchName: string;

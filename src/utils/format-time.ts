@@ -1,4 +1,5 @@
 import 'dayjs/locale/ar'; // Import Arabic locale
+
 import type { Dayjs, OpUnitType } from 'dayjs';
 
 import dayjs from 'dayjs';

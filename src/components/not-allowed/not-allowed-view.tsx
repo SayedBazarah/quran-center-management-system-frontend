@@ -1,9 +1,13 @@
 import type { Theme, SxProps } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import { MotionContainer, varBounce } from '../animate';
+
 import { m } from 'framer-motion';
+
+import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+
 import { ForbiddenIllustration } from 'src/assets/illustrations';
+
+import { varBounce, MotionContainer } from '../animate';
 
 type Props = {
   sx?: SxProps<Theme>;

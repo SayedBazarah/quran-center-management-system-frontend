@@ -1,5 +1,5 @@
-import type { IRoundTableFilters } from 'src/types/course';
 import type { UseSetStateReturn } from 'minimal-shared/hooks';
+import type { IRoundTableFilters } from 'src/types/course';
 import type { FiltersResultProps } from 'src/components/filters-result';
 
 import { useCallback } from 'react';
