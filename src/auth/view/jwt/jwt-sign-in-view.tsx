@@ -48,8 +48,8 @@ export function JwtSignInView() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const defaultValues: SignInSchemaType = {
-    name: 'u-71156',
-    password: '123456',
+    name: '',
+    password: '',
   };
 
   const methods = useForm<SignInSchemaType>({
@@ -69,6 +69,7 @@ export function JwtSignInView() {
 
       router.refresh();
     } catch (error) {
+      console.error("error");
       console.error(error);
       const feedbackMessage = getErrorMessage(error);
       setErrorMessage(feedbackMessage);

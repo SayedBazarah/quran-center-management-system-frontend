@@ -46,6 +46,8 @@ import { CourseTableFiltersResult } from '../course-table-filters-result';
 
 const TABLE_HEAD: TableHeadCellProps[] = [
   { id: 'name', label: 'الاسم' },
+  { id: 'duration', label: 'المدة', width: 88 },
+  { id: 'order', label: 'الترتيب', align: 'center', width: 88 },
   { id: '', width: 88 },
 ];
 

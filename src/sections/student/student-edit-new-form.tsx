@@ -47,9 +47,6 @@ export const StudentQuickEditSchema = zod.object({
   nationalId: zod.string().min(1, { message: 'رقم الهوية مطلوب !' }).length(14, {
     message: 'رقم الهوية يجب ان يكون 14 رقم!',
   }),
-  nationalIdImg: schemaUtils.file({
-    error: 'الصورة غير صحيحة!',
-  }),
 });
 // ----------------------------------------------------------------------
 
@@ -84,7 +81,6 @@ export function StudentQuickEditForm({
     address: currentStudent?.address || '',
     nationalId: currentStudent?.nationalId || '',
     branchId: currentStudent?.branchId?.id || '',
-    nationalIdImg: currentStudent?.nationalIdImg || '',
     adminId: currentStudent?.adminId?.id || '',
   };
 
@@ -185,7 +181,6 @@ export function StudentQuickEditForm({
           <MenuItem value="female">سيدة</MenuItem>
         </Field.Text>
       </Box>
-      <Field.Upload name="nationalIdImg" />
     </Stack>
   );
 

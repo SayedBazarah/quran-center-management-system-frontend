@@ -1,6 +1,5 @@
-
 import type { ITeacherItem } from './teacher';
-import type { IEnrollmentItem} from './student';
+import type { IEnrollmentItem } from './student';
 
 export interface ICourseRounds {
   id: number;
@@ -25,6 +24,7 @@ export interface ICourseItem {
   id: number;
   name: string;
   price: number;
+  order: number;
   duration: number;
 }
 

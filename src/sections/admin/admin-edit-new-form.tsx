@@ -1,8 +1,8 @@
 import type { IAdminItem } from 'src/types/admin';
 
 import * as zod from 'zod';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useState, useCallback } from 'react';
 import { useBoolean } from 'minimal-shared/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isValidPhoneNumber } from 'react-phone-number-input';
@@ -13,8 +13,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { Box, Stack, Alert, MenuItem, IconButton, InputAdornment } from '@mui/material';
-
-import { appendFormData } from 'src/utils/append-form-data';
 
 import { useGetRoles } from 'src/actions/role';
 import axios, { endpoints } from 'src/lib/axios';
@@ -49,11 +47,6 @@ export const AdminQuickEditSchema = zod.object({
     .min(1, { message: 'الهوية الوطنية مطلوبة!' })
     .length(14, { message: 'الهوية الوطنية يجب أن تكون 14 رقم!' }),
   gender: zod.string().min(1, { message: 'الجنس مطلوب!' }),
-  nationalIdImg: schemaUtils
-    .file({
-      error: 'الصورة غير صحيحة!',
-    })
-    .optional(),
   roleId: zod.string().min(1, { message: 'الوظيفة مطلوب!' }),
   branchIds: zod.array(zod.string().min(1, { message: 'الفرع مطلوب!' })),
 });
@@ -81,7 +74,6 @@ export function AdminQuickEditForm({ isNew = true, admin, open, onClose }: Props
     roleId: admin?.roleId?.id || '',
     branchIds: admin?.branchIds?.map((b: any) => b.id) || [],
     nationalId: admin?.nationalId || '',
-    nationalIdImg: admin?.nationalIdImg || '',
     username: admin?.username || '',
     password: '',
   };
@@ -95,22 +87,15 @@ export function AdminQuickEditForm({ isNew = true, admin, open, onClose }: Props
   const {
     reset,
     handleSubmit,
-    setValue,
     formState: { isSubmitting },
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const formData = new FormData();
-      appendFormData(formData, data);
       if (!isNew && admin?.id) {
         await axios.patch(endpoints.admin.update.replace(':id', admin.id), data);
       } else {
-        await axios.post(endpoints.admin.new, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        await axios.post(endpoints.admin.new, data);
       }
       await refetch();
       reset();
@@ -124,21 +109,6 @@ export function AdminQuickEditForm({ isNew = true, admin, open, onClose }: Props
   });
 
   // ----------------------------------------
-  const handleDropNationalIdImg = useCallback(
-    (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
-
-      const newFile = Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      });
-
-      if (file) {
-        setValue('nationalIdImg', newFile, { shouldValidate: true });
-      }
-    },
-    [setValue]
-  );
-
   return (
     <Dialog
       fullWidth
@@ -163,8 +133,15 @@ export function AdminQuickEditForm({ isNew = true, admin, open, onClose }: Props
           <Stack direction="column" spacing={2}>
             <Box />
             <Field.Text fullWidth name="name" label="اسم المسئول" />
-            <Stack direction="row" justifyContent="space-between" spacing={2}>
-              <Field.Text name="username" label="اسم المستخدم" />
+            <Box sx={{
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(2, 1fr)',
+              },
+              gap: 2,
+            }}
+            >              <Field.Text name="username" label="اسم المستخدم" />
               <Field.Text
                 name="password"
                 label="كلمة المرور"
@@ -185,7 +162,7 @@ export function AdminQuickEditForm({ isNew = true, admin, open, onClose }: Props
                   },
                 }}
               />
-            </Stack>
+            </Box>
             <Box
               sx={{
                 display: 'grid',
@@ -207,22 +184,33 @@ export function AdminQuickEditForm({ isNew = true, admin, open, onClose }: Props
                 options={branches.map((b) => ({ value: b.id, label: b.name }))}
               />
             </Box>
-            <Stack direction="row" spacing={2}>
+            <Box sx={{
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(2, 1fr)',
+              },
+              gap: 2,
+            }}
+            >
               <Field.Text name="email" label="البريد الإلكتروني" />
               <Field.Phone name="phone" placeholder="رقم الهاتف" defaultCountry="EG" />
-            </Stack>
-            <Stack direction="row" spacing={2}>
+            </Box>
+            <Box sx={{
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(2, 1fr)',
+              },
+              gap: 2,
+            }}
+            >
               <Field.Text name="nationalId" label="رقم البطاقة" disabled={!!admin} />
               <Field.Text select name="gender" label="الجنس" disabled={!!admin}>
                 <MenuItem value="male">رجل</MenuItem>
                 <MenuItem value="female">سيدة</MenuItem>
               </Field.Text>
-            </Stack>
-            <Field.Upload
-              name="nationalIdImg"
-              onDrop={handleDropNationalIdImg}
-              disabled={!!admin}
-            />
+            </Box>
           </Stack>
         </DialogContent>
 

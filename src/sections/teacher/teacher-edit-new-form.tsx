@@ -14,7 +14,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
 import { hasAnyRole } from 'src/utils/has-role';
-import { appendFormData } from 'src/utils/append-form-data';
 
 import axios, { endpoints } from 'src/lib/axios';
 import { useGetBranches } from 'src/actions/branch';
@@ -40,11 +39,6 @@ export const TeacherQuickEditSchema = zod.object({
     .min(1, { message: 'الهوية الوطنية مطلوبة!' })
     .length(14, { message: 'الهوية الوطنية يجب أن تكون 14 رقم!' }),
   gender: zod.string().min(1, { message: 'الجنس مطلوب!' }),
-  nationalIdImg: schemaUtils
-    .file({
-      error: 'الصورة غير صحيحة!',
-    })
-    .nullable(),
   branchId: zod.string().min(1, { message: 'الفرع مطلوب!' }),
 });
 // ----------------------------------------------------------------------
@@ -73,7 +67,6 @@ export function TeacherQuickEditForm({ isNew = true, refetch, teacher, open, onC
     gender: teacher?.gender || '',
     branchId: teacher?.branchId?.id || '',
     nationalId: teacher?.nationalId || '',
-    nationalIdImg: teacher?.nationalIdImg || '',
   };
 
   const methods = useForm<TeacherQuickEditSchemaType>({
@@ -90,20 +83,10 @@ export function TeacherQuickEditForm({ isNew = true, refetch, teacher, open, onC
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const formData = new FormData();
-      appendFormData(formData, data);
       if (isNew)
-        await axios.post(endpoints.teacher.new, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        await axios.post(endpoints.teacher.new, data);
       else
-        await axios.patch(endpoints.teacher.update.replace(':id', teacher?.id || ''), formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        await axios.patch(endpoints.teacher.update.replace(':id', teacher?.id || ''), data);
       reset();
       refetch();
       onClose();
@@ -168,7 +151,6 @@ export function TeacherQuickEditForm({ isNew = true, refetch, teacher, open, onC
                 <MenuItem value="female">سيدة</MenuItem>
               </Field.Text>
             </Stack>
-            <Field.Upload name="nationalIdImg" disabled={!!teacher} />
           </Stack>
         </DialogContent>
 

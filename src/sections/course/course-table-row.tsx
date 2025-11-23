@@ -125,7 +125,12 @@ export function CourseTableRow({
             {row.name}
           </Box>
         </TableCell>
-
+        <TableCell>
+          {row.duration} يوم
+        </TableCell>
+        <TableCell>
+          {row.order}
+        </TableCell>
         <TableCell>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <IconButton
