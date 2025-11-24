@@ -10,7 +10,7 @@ import { fetcher, endpoints } from 'src/lib/axios';
 
 const swrOptions: SWRConfiguration = {
   revalidateIfStale: true,
-  revalidateOnFocus: true,
+  revalidateOnFocus: false,
   revalidateOnReconnect: true,
 };
 

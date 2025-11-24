@@ -4,7 +4,7 @@ import { RolesListView } from 'src/sections/role/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = { title: `Dashboard - ${CONFIG.appName}` };
+export const metadata = { title: `الوظائف - ${CONFIG.appName}` };
 
 export default function Page() {
   return <RolesListView />;
