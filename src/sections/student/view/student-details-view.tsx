@@ -3,12 +3,13 @@
 import { useBoolean } from 'minimal-shared/hooks';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-import { Box, Tab, Card, Tabs, Button, useTheme } from '@mui/material';
+import { Box, Tab, Card, Tabs, Alert, Button, useTheme, Typography } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
 import { hasAnyRole } from 'src/utils/has-role';
+import { fDateTime } from 'src/utils/format-time';
 
 import { useGetStudentById } from 'src/actions/student';
 import { DashboardContent } from 'src/layouts/dashboard';
@@ -87,6 +88,29 @@ export function StudentDetailsView({ id }: Props) {
         }
         sx={{ mb: { xs: 3, md: 5 } }}
       />
+      {
+        student.rejectionReason && <Alert severity="error"
+          sx={{
+            alignItems: 'center'
+          }}>
+          <Box sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: '1fr 120px' },
+            gap: 2,
+            alignItems: 'center',
+            justifyContent: {
+              xs: 'center',
+              md: 'space-between'
+            },
+          }}>
+            <Typography>
+              تم رفض هذا الطالب في تاريخ {fDateTime(student.rejectedAt)}، بسبب: {student.rejectionReason}
+            </Typography>
+            {/* <Button variant='contained' color='black'>قبول الطالب</Button> */}
+
+          </Box>
+        </Alert>
+      }
       <Card sx={{ p: 3 }}>
         <Box
           sx={{

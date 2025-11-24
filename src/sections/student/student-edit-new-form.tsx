@@ -14,7 +14,6 @@ import DialogContent from '@mui/material/DialogContent';
 import { Box, Stack, Alert, MenuItem } from '@mui/material';
 
 import { hasAnyRole } from 'src/utils/has-role';
-import { appendFormData } from 'src/utils/append-form-data';
 
 import axios, { endpoints } from 'src/lib/axios';
 import { useGetAdmins } from 'src/actions/admin';
@@ -98,20 +97,9 @@ export function StudentQuickEditForm({
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const formData = new FormData();
-      appendFormData(formData, data);
-      if (isNew)
-        await axios.post(endpoints.student.new, data, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+      if (isNew) await axios.post(endpoints.student.new, data);
       else
-        await axios.patch(endpoints.student.update.replace(':id', currentStudent?.id || ''), data, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        await axios.patch(endpoints.student.update.replace(':id', currentStudent?.id || ''), data);
       reset();
       refetch();
       onClose();

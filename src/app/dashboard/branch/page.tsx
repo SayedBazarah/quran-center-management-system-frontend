@@ -4,7 +4,7 @@ import BranchesListView from 'src/sections/branch/view/branches-list-view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = { title: `Dashboard - ${CONFIG.appName}` };
+export const metadata = { title: `الفروع - ${CONFIG.appName}` };
 
 export default function Page() {
   return <BranchesListView />;

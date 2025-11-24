@@ -40,7 +40,11 @@ export const AdminQuickEditSchema = zod.object({
   name: zod.string().min(1, { message: 'الاسم الدورة مطلوب!' }),
   email: zod.string().email({ message: 'البريد الإلكتروني غير صحيح!' }),
   username: zod.string().min(1, { message: 'اسم المستخدم مطلوب!' }),
-  password: zod.string().min(8, { message: 'كلمة المرور يجب أن تحتوي على حرفا على الأقل 8 حرف!' }),
+  password: zod
+    .string()
+    .min(8, { message: "كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل!" })
+    .optional()
+    .or(zod.literal("")),
   phone: schemaUtils.phoneNumber({ isValid: isValidPhoneNumber }),
   nationalId: zod
     .string()
@@ -132,7 +136,7 @@ export function AdminQuickEditForm({ isNew = true, admin, open, onClose }: Props
         <DialogContent>
           <Stack direction="column" spacing={2}>
             <Box />
-            <Field.Text fullWidth name="name" label="اسم المسئول" />
+            <Field.Text fullWidth name="name" label="اسم المشرف" />
             <Box sx={{
               display: 'grid',
               gridTemplateColumns: {

@@ -54,9 +54,6 @@ export default function AdminListView() {
   const confirmDialog = useBoolean();
 
   const { admins, refetch } = useGetAdmins();
-  console.log('Admin List', {
-    admins,
-  });
 
   const filters = useSetState<IAdminTableFilters>({ name: '' });
   const { state: currentFilters } = filters;
@@ -130,15 +127,15 @@ export default function AdminListView() {
     <>
       <DashboardContent>
         <CustomBreadcrumbs
-          heading="المسئولين"
-          links={[{ name: 'لوحة التحكم', href: paths.dashboard.root }, { name: 'المسئولين' }]}
+          heading="المشرفين"
+          links={[{ name: 'لوحة التحكم', href: paths.dashboard.root }, { name: 'المشرفين' }]}
           action={
             <Button
               variant="contained"
               startIcon={<Iconify icon="mingcute:add-line" />}
               onClick={isNew.onTrue}
             >
-              مسئول جديد
+              مشرف جديد
             </Button>
           }
           sx={{ mb: { xs: 3, md: 5 } }}
@@ -204,7 +201,7 @@ export default function AdminListView() {
                         row={row}
                         selected={table.selected.includes(row.id.toString())}
                         // refetch={refetch}
-                        refetch={() => {}}
+                        refetch={() => { }}
                         onSelectRow={() => table.onSelectRow(row.id.toString())}
                         onDeleteRow={() => handleDeleteRow(row.id)}
                       />

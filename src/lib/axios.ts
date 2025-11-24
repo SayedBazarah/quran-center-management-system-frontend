@@ -124,7 +124,7 @@ export const endpoints = {
     new: '/roles',
     update: '/roles/:id',
     delete: '/roles/:id',
-    permission: '/roles/permissions',
+    permission: '/roles/permissions?sort=order&limit=1000',
   },
   branch: {
     list: '/branches',

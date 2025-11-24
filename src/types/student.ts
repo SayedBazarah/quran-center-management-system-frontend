@@ -56,6 +56,8 @@ export interface IStudentItem {
   graduated: string;
   enrollmentLogs: IEnrollmentLogItem[];
   createdAt: string;
+  rejectionReason?: string;
+  rejectedAt?: string;
 }
 
 export interface IEnrollmentWithStudent {
