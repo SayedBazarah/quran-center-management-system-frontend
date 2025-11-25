@@ -7,8 +7,8 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 
+import { Box, Alert, Stack, Button, MenuItem } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { Box, Alert, Stack, Button, MenuItem, Typography } from '@mui/material';
 
 import { today } from 'src/utils/format-time';
 import { appendFormData } from 'src/utils/append-form-data';
@@ -40,9 +40,6 @@ export const StudentQuickEditSchema = zod.object({
   nationalId: zod.string().min(1, { message: 'رقم الهوية مطلوب !' }).length(14, {
     message: 'رقم الهوية يجب ان يكون 14 رقم!',
   }),
-  nationalIdImg: schemaUtils.file({
-    error: 'الصورة غير صحيحة!',
-  }),
 });
 // ----------------------------------------------------------------------
 
@@ -66,7 +63,6 @@ export default function StudentDetails({ student, refetch }: Props) {
     adminId: student?.adminId?.id,
     branchId: student?.branchId?.id,
     nationalId: student?.nationalId,
-    nationalIdImg: student.nationalIdImg,
   };
 
   const methods = useForm<StudentQuickEditSchemaType>({
@@ -129,7 +125,7 @@ export default function StudentDetails({ student, refetch }: Props) {
         }}
         sx={{ display: 'grid', gap: 2 }}
       >
-        <Field.Text name="nationalId" label="رقم الهوية" disabled />
+        <Field.Text name="nationalId" label="رقم الهوية" />
         <Controller
           name="birthDate"
           control={control}
@@ -147,19 +143,15 @@ export default function StudentDetails({ student, refetch }: Props) {
                   helperText: error?.message,
                 },
               }}
-              disabled
+
             />
           )}
         />
-        <Field.Text select name="gender" label="النوع" disabled>
+        <Field.Text select name="gender" label="النوع" >
           <MenuItem value="male">ولد</MenuItem>
           <MenuItem value="female">بنت</MenuItem>
         </Field.Text>
       </Box>
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        صورة البطاقة/شهادة الميلاد
-      </Typography>
-      <Field.Upload name="nationalIdImg" disabled />
     </Stack>
   );
   // ----------------------------------------------------------------------
