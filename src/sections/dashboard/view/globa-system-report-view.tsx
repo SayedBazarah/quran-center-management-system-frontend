@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers';
+"use client";
 
 import Box from '@mui/material/Box';
 import Accordion from '@mui/material/Accordion';
@@ -7,7 +7,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 
 import { CONFIG } from 'src/global-config';
-import axiosInstance, { endpoints } from 'src/lib/axios';
+import { useGetAnalytics } from 'src/actions/analytics';
 
 import { Iconify } from 'src/components/iconify';
 
@@ -16,60 +16,21 @@ import { EnrollmentStatus, EnrollmentStatusLabels } from 'src/types/student';
 import { EnrollmentsOverview } from '../enrollments-overview';
 import { CourseWidgetSummary } from '../enrollment-widget-summary';
 
-interface ReportData {
-  branchName: string;
-  new_enrollments: number;
-  new_enrollments_accepted: number;
-  new_students: number;
-  new_students_accepted: number;
-  enrollment_status_counts: {
-    pending: number;
-    active: number;
-    late: number;
-    graduated: number;
-    rejected: number;
-    dropout: number;
-  };
-}
-
-// Fetch data on the server
-async function getReportData(startDate?: Date, endDate?: Date): Promise<ReportData[]> {
-  try {
-    const cookieStore = await cookies();
-
-    const params = new URLSearchParams();
-    if (startDate) params.append('start', startDate.toISOString());
-    if (endDate) params.append('end', endDate.toISOString());
-
-    const url = `${endpoints.reports.root}?${params.toString()}`;
-    const res = await axiosInstance.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        Cookie: cookieStore.toString(),
-      },
-    });
-    return res.data && res.data;
-  } catch (e) {
-    console.log(e);
-    return [];
-  }
-}
 
 type Props = {
   startDate: Date;
   endDate: Date;
 };
-export async function GlobaSystemReportView({ startDate, endDate }: Props) {
-  const data = await getReportData(startDate, endDate);
-
-  const new_students = data.reduce((acc, item) => acc + item.new_students, 0);
-  const new_students_accepted = data.reduce((acc, item) => acc + item.new_students_accepted, 0);
-  const new_enrollments = data.reduce((acc, item) => acc + item.new_enrollments, 0);
-  const new_enrollments_accepted = data.reduce(
+export function GlobaSystemReportView({ startDate, endDate }: Props) {
+  const { report } = useGetAnalytics(startDate, endDate)
+  const new_students = report.reduce((acc, item) => acc + item.new_students, 0);
+  const new_students_accepted = report.reduce((acc, item) => acc + item.new_students_accepted, 0);
+  const new_enrollments = report.reduce((acc, item) => acc + item.new_enrollments, 0);
+  const new_enrollments_accepted = report.reduce(
     (acc, item) => acc + item.new_enrollments_accepted,
     0
   );
-  const enrollment_status_counts = data.reduce(
+  const enrollment_status_counts = report.reduce(
     (
       acc: {
         pending: number;
@@ -167,7 +128,7 @@ export async function GlobaSystemReportView({ startDate, endDate }: Props) {
           />
         </AccordionDetails>
       </Box>
-      {data.map((item, index) => (
+      {report.map((item, index) => (
         <Accordion key={index} sx={{ mt: 2 }}>
           <AccordionSummary
             expandIcon={<Iconify icon="eva:chevron-down-fill" />}
