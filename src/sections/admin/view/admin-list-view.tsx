@@ -40,7 +40,7 @@ import { AdminQuickEditForm } from '../admin-edit-new-form';
 
 const TABLE_HEAD: TableHeadCellProps[] = [
   { id: 'name', label: 'الاسم' },
-  { id: 'role', label: 'الفرع', width: 240 },
+  { id: 'role', label: 'الفروع', width: 120 },
   { id: 'role', label: 'الوظيفة', width: 150 },
   { id: '', width: 88 },
 ];

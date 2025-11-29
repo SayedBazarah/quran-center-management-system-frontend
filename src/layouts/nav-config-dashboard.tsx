@@ -60,18 +60,18 @@ export const navData: NavSectionProps['data'] = [
     items: [
       { title: 'الطلاب', path: paths.dashboard.student.root, icon: ICONS.ecommerce },
       {
-        title: 'طلاب بنتظار القبول',
+        title: 'قبول دفعة',
         path: paths.dashboard.student.acceptStudents,
         icon: ICONS.ecommerce,
       },
       {
-        title: 'دورات بنتظار القبول',
+        title: 'تصعيدات',
         path: paths.dashboard.student.acceptEnrollment,
         icon: ICONS.ecommerce,
       },
-      { title: 'المدرسين', path: paths.dashboard.teacher.root, icon: ICONS.job },
+      { title: 'المعلمين', path: paths.dashboard.teacher.root, icon: ICONS.job },
       {
-        title: 'المراحل التعليمية',
+        title: 'المراحل',
         path: paths.dashboard.course.root,
         icon: ICONS.course,
       },
@@ -84,7 +84,7 @@ export const navData: NavSectionProps['data'] = [
     subheader: 'المسئولين والادوار',
     items: [
       {
-        title: 'قائمة الموظفين',
+        title: 'المشرفين',
         path: paths.dashboard.admin.root,
         icon: ICONS.user,
       },

@@ -96,7 +96,7 @@ export const endpoints = {
   },
   course: {
     new: '/courses',
-    list: '/courses',
+    list: '/courses?sort=order&limit=1000',
     update: '/courses/:id',
     delete: '/courses/:id',
   },
@@ -109,12 +109,12 @@ export const endpoints = {
   },
   teacher: {
     new: '/teachers',
-    list: '/teachers',
+    list: '/teachers?sort=name&limit=1000',
     update: '/teachers/:id',
     delete: '/teachers/:id',
   },
   admin: {
-    list: '/admins',
+    list: '/admins?sort=name&limit=1000',
     new: '/admins',
     update: '/admins/:id',
     delete: '/admins/:id',

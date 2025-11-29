@@ -12,7 +12,6 @@ import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 
-import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomPopover } from 'src/components/custom-popover';
@@ -141,11 +140,7 @@ export function AdminTableRow({ row, selected, refetch, onSelectRow, onDeleteRow
         </TableCell>
 
         <TableCell sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1 }}>
-          {row.branchIds?.map((b: any) => (
-            <Label key={b.id} color="primary" variant="filled" sx={{ mr: 1 }}>
-              {b.name}
-            </Label>
-          )) || '-'}
+          {row.branchIds.length || '-'}
         </TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.roleId?.name || '-'}</TableCell>
         <TableCell>
