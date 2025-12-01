@@ -56,8 +56,8 @@ export function TeacherQuickEditForm({ isNew = true, refetch, teacher, open, onC
   const { branches } = useGetBranches();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const creatingPermission = hasAnyRole(permissions, [GlobalPermissionCode.CreateBranch]);
-  const updatingPermission = hasAnyRole(permissions, [GlobalPermissionCode.UpdateBranch]);
+  const creatingPermission = hasAnyRole(permissions, [GlobalPermissionCode.CreateTeacher]);
+  const updatingPermission = hasAnyRole(permissions, [GlobalPermissionCode.UpdateTeacher]);
 
   const defaultValues: TeacherQuickEditSchemaType = {
     name: teacher?.name || '',
