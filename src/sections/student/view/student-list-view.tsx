@@ -445,9 +445,12 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
   }
 
   if (name) {
+    const search = name.toLowerCase();
     inputData = inputData.filter((row) =>
-      row.student.name.toLowerCase().includes(name.toLowerCase())
+      row.student.name.toLowerCase().includes(search) ||
+      row.student.phone.toLowerCase().includes(search)
     );
+
   }
 
   return inputData;
