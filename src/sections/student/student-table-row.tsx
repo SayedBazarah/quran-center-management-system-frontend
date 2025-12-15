@@ -176,7 +176,11 @@ export function StudentTableRow({
           sx={{ bgcolor: 'background.neutral' }}
         >
           <Paper
-            elevation={1} sx={{ m: 1.5 }}>
+            elevation={1} sx={{
+              m: 1.5,
+              borderRadius: '0 0 6px 6px ',
+
+            }}>
             {/* Header */}
             <Box
               sx={{
@@ -184,15 +188,16 @@ export function StudentTableRow({
                 gridTemplateColumns: '1fr 150px 150px 150px 150px ',
                 gap: 0,
                 backgroundColor: 'primary.main',
-                borderBottom: '2px solid #ddd',
-                color: 'white'
+                padding: '5px 0',
+                borderRadius: '6px 6px 0 0',
+                color: 'white',
               }}
             >
               {TABLE_HEAD.map((header, index) => (
                 <Box
                   key={index}
                   sx={{
-                    padding: '5px 12px',
+                    padding: '0px 12px',
                     fontWeight: 600,
                     fontSize: '14px',
                     borderRight: index < TABLE_HEAD.length - 1 ? '1px solid #ddd' : 'none',
