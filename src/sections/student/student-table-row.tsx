@@ -22,9 +22,12 @@ import { Iconify } from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomPopover } from 'src/components/custom-popover';
 
-import { StudentStatus, EnrollmentStatus } from 'src/types/student';
+import { EnrollmentStatus } from 'src/types/student';
 
 import { NewEnrollmentForm } from './new-enrollemtn-form';
+
+// ----------------------------------------------------------------------
+const TABLE_HEAD = ['المرحلة', 'تاريخ البداء', 'تاريخ الانتهاء', 'المشرف', 'المدرس',];
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +44,6 @@ export function StudentTableRow({
   row,
   selected,
   editHref,
-  refetch,
   onSelectRow,
   onDeleteRow,
 }: Props) {
@@ -131,41 +133,6 @@ export function StudentTableRow({
           <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
             <Link component={RouterLink} href={editHref} color="inherit" sx={{ cursor: 'pointer' }}>
               {row.student.name}
-              <Chip
-                color={
-                  row.student.status === StudentStatus.DROPOUT
-                    ? 'default'
-                    : row.student.status === StudentStatus.GRADUATED
-                      ? 'success'
-                      : row.student.status === StudentStatus.REJECTED
-                        ? 'error'
-                        : row.student.status === StudentStatus.LATE
-                          ? 'error'
-                          : row.student.status === StudentStatus.PENDING
-                            ? 'warning'
-                            : row.student.status === StudentStatus.ACTIVE
-                              ? 'success'
-                              : 'default'
-                }
-                size="small"
-                variant="outlined"
-                label={
-                  row.student.status === StudentStatus.DROPOUT
-                    ? 'ترك المركز'
-                    : row.student.status === StudentStatus.GRADUATED
-                      ? 'تخرج'
-                      : row.student.status === StudentStatus.REJECTED
-                        ? 'مرفوض'
-                        : row.student.status === StudentStatus.LATE
-                          ? 'متاخر'
-                          : row.student.status === StudentStatus.PENDING
-                            ? 'بنتظار القبول'
-                            : row.student.status === StudentStatus.ACTIVE
-                              ? 'يدرس'
-                              : 'لا يوجد حالة'
-                }
-                sx={{ ml: 1 }}
-              />
             </Link>
             <Box
               component="a"
@@ -178,12 +145,10 @@ export function StudentTableRow({
           </Stack>
         </Box>
       </TableCell>
-
-      <TableCell sx={{ whiteSpace: 'nowrap' }}>{fDate(row.student.createdAt) || '-'}</TableCell>
-      <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.student.adminId?.name || '-'}</TableCell>
-      <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.currentEnrollment?.courseId?.name}</TableCell>
-      <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.currentEnrollment?.teacherId?.name}</TableCell>
-      {/* <TableCell sx={{ whiteSpace: 'nowrap' }}>{teacherNames.join(', ') || '-'}</TableCell> */}
+      <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.enrollments?.length || '-'}</TableCell>
+      <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.currentEnrollment?.courseId?.name || '-'}</TableCell>
+      <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.currentEnrollment?.teacherId?.name || '-'}</TableCell>
+      <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.currentEnrollment?.adminId?.name || '-'}</TableCell>
 
       <TableCell>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -210,78 +175,125 @@ export function StudentTableRow({
           unmountOnExit
           sx={{ bgcolor: 'background.neutral' }}
         >
-          <Paper sx={{ m: 1.5 }}>
-            {row.enrollments.map((item, index) => (
-              <Box
-                key={index}
-                sx={(theme) => ({
-                  display: 'flex',
-                  alignItems: 'center',
-                  p: theme.spacing(1.5, 2, 1.5, 1.5),
-                  '&:not(:last-of-type)': {
-                    borderBottom: `solid 2px ${theme.vars.palette.background.neutral}`,
-                  },
-                })}
-              >
-                <Box>{item.courseId?.name} </Box>
-                <Box>
-                  {(`${item.status}` === EnrollmentStatus.ACTIVE && (
-                    <Chip
-                      label="يدرس"
-                      color="success"
-                      size="small"
-                      variant="outlined"
-                      sx={{ mx: 1 }}
-                    />
-                  )) ||
-                    (`${item.status}` === EnrollmentStatus.PENDING && (
-                      <Chip
-                        label="بنتظار القبول"
-                        color="warning"
-                        size="small"
-                        variant="outlined"
-                        sx={{ mx: 1 }}
-                      />
-                    )) ||
-                    (`${item.status}` === EnrollmentStatus.LATE && (
-                      <Chip
-                        label="متاخر"
-                        color="error"
-                        size="small"
-                        variant="outlined"
-                        sx={{ mx: 1 }}
-                      />
-                    )) ||
-                    (`${item.status}` === EnrollmentStatus.DROPOUT && (
-                      <Chip
-                        label="سقط"
-                        color="default"
-                        size="small"
-                        variant="outlined"
-                        sx={{ mx: 1 }}
-                      />
-                    )) ||
-                    (`${item.status}` === EnrollmentStatus.GRADUATED && (
-                      <Chip
-                        label="انتهي من الدورة"
-                        color="info"
-                        size="small"
-                        variant="outlined"
-                        sx={{ mx: 1 }}
-                      />
-                    )) ||
-                    (`${item.status}` === EnrollmentStatus.REJECTED && (
-                      <Chip
-                        label="مرفوضه"
-                        color="error"
-                        size="small"
-                        variant="outlined"
-                        sx={{ mx: 1 }}
-                      />
-                    ))}
+          <Paper
+            elevation={1} sx={{ m: 1.5 }}>
+            {/* Header */}
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 150px 150px 150px 150px ',
+                gap: 0,
+                backgroundColor: 'primary.main',
+                borderBottom: '2px solid #ddd',
+                color: 'white'
+              }}
+            >
+              {TABLE_HEAD.map((header, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    padding: '5px 12px',
+                    fontWeight: 600,
+                    fontSize: '14px',
+                    borderRight: index < TABLE_HEAD.length - 1 ? '1px solid #ddd' : 'none',
+                    ...(index !== 0 && { textAlign: 'center' }),
+                  }}
+                >
+                  {header}
                 </Box>
-              </Box>
-            ))}
+              ))}
+            </Box>
+            {row.enrollments.map((enrollment, rowIndex) => {
+              const startDate = new Date(enrollment.startDate as string);
+
+              const endDate = new Date(startDate);
+              endDate.setDate(endDate.getDate() + 30);
+
+              return (
+                <Box
+                  key={rowIndex}
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 150px 150px 150px 150px',
+                    gap: 0,
+                    borderBottom: '1px solid #eee',
+                    '&:hover': {
+                      backgroundColor: '#fafafa',
+                    },
+                  }}
+                >
+                  <Box sx={{ padding: '6px', borderRight: '1px solid #eee' }}>{enrollment.courseId?.name}
+                    {(`${enrollment.status}` === EnrollmentStatus.ACTIVE && (
+                      <Chip
+                        label="يدرس"
+                        color="success"
+                        size="small"
+                        variant="outlined"
+                        sx={{ mx: 1 }}
+                      />
+                    )) ||
+                      (`${enrollment.status}` === EnrollmentStatus.PENDING && (
+                        <Chip
+                          label="بنتظار القبول"
+                          color="warning"
+                          size="small"
+                          variant="outlined"
+                          sx={{ mx: 1 }}
+                        />
+                      )) ||
+                      (`${enrollment.status}` === EnrollmentStatus.LATE && (
+                        <Chip
+                          label="متاخر"
+                          color="error"
+                          size="small"
+                          variant="outlined"
+                          sx={{ mx: 1 }}
+                        />
+                      )) ||
+                      (`${enrollment.status}` === EnrollmentStatus.DROPOUT && (
+                        <Chip
+                          label="سقط"
+                          color="default"
+                          size="small"
+                          variant="outlined"
+                          sx={{ mx: 1 }}
+                        />
+                      )) ||
+                      (`${enrollment.status}` === EnrollmentStatus.GRADUATED && (
+                        <Chip
+                          label="انتهي من الدورة"
+                          color="info"
+                          size="small"
+                          variant="outlined"
+                          sx={{ mx: 1 }}
+                        />
+                      )) ||
+                      (`${enrollment.status}` === EnrollmentStatus.REJECTED && (
+                        <Chip
+                          label="مرفوضه"
+                          color="error"
+                          size="small"
+                          variant="outlined"
+                          sx={{ mx: 1 }}
+                        />
+                      ))}
+
+                  </Box>
+                  <Box sx={{ padding: '6px', borderRight: '1px solid #eee', textAlign: 'center', fontSize: '13px' }}>
+                    {fDate(enrollment.startDate)}
+                  </Box>
+                  <Box sx={{ padding: '6px', borderRight: '1px solid #eee', textAlign: 'center', fontSize: '13px' }}>
+                    {fDate(endDate)}
+                  </Box>
+                  <Box sx={{ padding: '6px', borderRight: '1px solid #eee', textAlign: 'center', fontSize: '13px' }}>
+                    {enrollment.adminId?.name}
+                  </Box>
+                  <Box sx={{ padding: '6px', borderRight: '1px solid #eee', textAlign: 'center', fontSize: '13px' }}>
+                    {enrollment.teacherId?.name}
+                  </Box>
+                </Box>
+              )
+            })}
           </Paper>
         </Collapse>
       </TableCell>

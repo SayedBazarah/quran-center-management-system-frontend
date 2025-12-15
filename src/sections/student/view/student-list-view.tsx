@@ -66,10 +66,10 @@ import { StudentTableFiltersResult } from '../student-table-filters-result';
 
 const TABLE_HEAD: TableHeadCellProps[] = [
   { id: 'name', label: 'الاسم' },
-  { id: 'phone', label: 'سجل في' },
-  { id: 'adminId', label: 'المشرف' },
-  { id: 'rounds', label: 'المراحل الحالية', width: 150 },
-  { id: 'teacherId', label: 'المدرس' },
+  { id: 'rounds', label: 'عدد المراحل', width: 100 },
+  { id: 'currentRound', label: 'المراحل الحالية', width: 100 },
+  { id: 'teacherId', label: 'المدرس', width: 80 },
+  { id: 'adminId', label: 'المشرف', width: 80 },
   { id: '', width: 88 },
 ];
 

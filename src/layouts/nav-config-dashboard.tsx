@@ -65,7 +65,7 @@ export const navData: NavSectionProps['data'] = [
         icon: ICONS.ecommerce,
       },
       {
-        title: 'تصعيدات',
+        title: 'قبول القطاع',
         path: paths.dashboard.student.acceptEnrollment,
         icon: ICONS.ecommerce,
       },
