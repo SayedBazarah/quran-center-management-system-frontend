@@ -72,7 +72,7 @@ export const endpoints = {
     update: '/students/:id',
     delete: '/students/:id',
     // -------------------
-    pendingList: '/students/status/pending/list',
+    pendingList: '/students/status/pending/list?sort=name&limit=1000',
     status: '/students/:id/status',
     // -------------------
     enroll: '/students/enrollment/create/:id', // Single enroll (just one students)
@@ -84,11 +84,11 @@ export const endpoints = {
     updateEnroll: '/students/enrollment/update/:id', // Single enroll (just one students)
     enrollLog: '/enrollments/log/:id', // Single enroll (just one students)
     closeEnrollment: '/students/enrollment/close/:id', // Single enroll (just one students)
-    pendingEnrollments: '/students/enrollment/pending',
+    pendingEnrollments: '/students/enrollment/pending?sort=name&limit=1000',
     acceptEnrollment: '/students/enrollment/accept/:id',
   },
   enrollments: {
-    pendingLst: '/enrollments/pending',
+    pendingLst: '/enrollments/pending?sort=name&limit=1000',
     create: '/enrollments/:id',
     update: '/enrollments/:id',
     studentList: '/enrollments/by-student/:studentId',
@@ -102,7 +102,7 @@ export const endpoints = {
   },
   round: {
     new: '/round',
-    list: '/round',
+    list: '/round?sort=name&limit=1000',
     update: '/round/:id',
     details: '/round/:id',
     bulkEnroll: '/round/bulk-enroll', // Bulk enroll
@@ -120,14 +120,14 @@ export const endpoints = {
     delete: '/admins/:id',
   },
   role: {
-    list: '/roles',
+    list: '/roles?sort=name&limit=1000',
     new: '/roles',
     update: '/roles/:id',
     delete: '/roles/:id',
     permission: '/roles/permissions?sort=order&limit=1000',
   },
   branch: {
-    list: '/branches',
+    list: '/branches?sort=name&limit=1000',
     new: '/branches',
     update: '/branches/:id',
     delete: '/branches/:id',
