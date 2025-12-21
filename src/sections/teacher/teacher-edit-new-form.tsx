@@ -9,9 +9,9 @@ import { isValidPhoneNumber } from 'react-phone-number-input';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Stack, Alert, MenuItem } from '@mui/material';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import { Box, Stack, Alert, MenuItem } from '@mui/material';
 
 import { hasAnyRole } from 'src/utils/has-role';
 
@@ -129,9 +129,8 @@ export function TeacherQuickEditForm({ isNew = true, refetch, teacher, open, onC
       <Form methods={methods} onSubmit={onSubmit}>
         <DialogContent>
           <Stack direction="column" spacing={2} mt={1}>
-            <Field.Text fullWidth name="name" label="اسم المدرس" />
-            <Stack direction="row" justifyContent="space-between" spacing={2}>
-              <Field.Text name="username" label="اسم المستخدم" />
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
+              <Field.Text fullWidth name="name" label="اسم المدرس" />
               <Field.Text select name="branchId" label="الفرع">
                 {branches.map((r) => (
                   <MenuItem key={r.id} value={r.id}>
@@ -139,18 +138,18 @@ export function TeacherQuickEditForm({ isNew = true, refetch, teacher, open, onC
                   </MenuItem>
                 ))}
               </Field.Text>
-            </Stack>
-            <Stack direction="row" spacing={2}>
+            </Box>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
               <Field.Text name="email" label="البريد الإلكتروني" />
               <Field.Phone name="phone" placeholder="رقم الهاتف" defaultCountry="EG" />
-            </Stack>
-            <Stack direction="row" spacing={2}>
-              <Field.Text name="nationalId" label="رقم البطاقة" disabled={!!teacher} />
-              <Field.Text select name="gender" label="الجنس" disabled={!!teacher}>
+            </Box>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
+              <Field.Text name="nationalId" label="رقم البطاقة" />
+              <Field.Text select name="gender" label="الجنس" >
                 <MenuItem value="male">رجل</MenuItem>
                 <MenuItem value="female">سيدة</MenuItem>
               </Field.Text>
-            </Stack>
+            </Box>
           </Stack>
         </DialogContent>
 
