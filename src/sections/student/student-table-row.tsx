@@ -143,6 +143,15 @@ export function StudentTableRow({
               {row.student.phone}
             </Box>
           </Stack>
+          {(`${row.currentEnrollment.status}` === EnrollmentStatus.LATE && (
+            <Chip
+              label="متاخر"
+              color="error"
+              size="small"
+              variant="outlined"
+              sx={{ mx: 1 }}
+            />
+          ))}
         </Box>
       </TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.enrollments?.length || '-'}</TableCell>

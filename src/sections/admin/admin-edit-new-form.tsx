@@ -17,7 +17,7 @@ import { Box, Stack, Alert, MenuItem, IconButton, InputAdornment } from '@mui/ma
 import { useGetRoles } from 'src/actions/role';
 import axios, { endpoints } from 'src/lib/axios';
 import { useGetAdmins } from 'src/actions/admin';
-import { useGetBranches } from 'src/actions/branch';
+import { useGetAllBranches } from 'src/actions/branch';
 
 import { Iconify } from 'src/components/iconify';
 import { Form, Field, schemaUtils } from 'src/components/hook-form';
@@ -65,7 +65,7 @@ type Props = {
 
 export function AdminQuickEditForm({ isNew = true, admin, open, onClose }: Props) {
   const { roles } = useGetRoles();
-  const { branches } = useGetBranches();
+  const { branches } = useGetAllBranches();
   const { refetch } = useGetAdmins();
 
   const showPassword = useBoolean();
