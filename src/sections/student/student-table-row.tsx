@@ -114,7 +114,10 @@ export function StudentTableRow({
   );
 
   const renderPrimaryRow = () => (
-    <TableRow hover selected={selected} aria-checked={selected} tabIndex={-1}>
+    <TableRow hover selected={selected} aria-checked={selected} tabIndex={-1}
+      sx={{
+        ...(`${row.currentEnrollment?.status}` === EnrollmentStatus.LATE) && { backgroundColor: 'rgba(255, 0, 0, 0.08)' },
+      }}>
       <TableCell padding="checkbox">
         <Checkbox
           checked={selected}
@@ -133,6 +136,15 @@ export function StudentTableRow({
           <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
             <Link component={RouterLink} href={editHref} color="inherit" sx={{ cursor: 'pointer' }}>
               {row.student.name}
+              {(`${row.currentEnrollment?.status}` === EnrollmentStatus.LATE && (
+                <Chip
+                  label="متاخر"
+                  color="error"
+                  size="small"
+                  variant="outlined"
+                  sx={{ mx: 1 }}
+                />
+              ))}
             </Link>
             <Box
               component="a"
@@ -143,15 +155,7 @@ export function StudentTableRow({
               {row.student.phone}
             </Box>
           </Stack>
-          {(`${row.currentEnrollment.status}` === EnrollmentStatus.LATE && (
-            <Chip
-              label="متاخر"
-              color="error"
-              size="small"
-              variant="outlined"
-              sx={{ mx: 1 }}
-            />
-          ))}
+
         </Box>
       </TableCell>
       <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.enrollments?.length || '-'}</TableCell>
