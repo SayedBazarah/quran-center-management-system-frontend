@@ -10,8 +10,8 @@ import { Box, Card, Table, Button, Tooltip, TableBody, IconButton } from '@mui/m
 
 import { paths } from 'src/routes/paths';
 
-import { useGetAdmins } from 'src/actions/admin';
 import axios, { endpoints } from 'src/lib/axios';
+import { useGetAllAdmins } from 'src/actions/admin';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { toast } from 'src/components/snackbar';
@@ -53,7 +53,7 @@ export default function AdminListView() {
 
   const confirmDialog = useBoolean();
 
-  const { admins, refetch } = useGetAdmins();
+  const { admins, refetch } = useGetAllAdmins();
 
   const filters = useSetState<IAdminTableFilters>({ name: '' });
   const { state: currentFilters } = filters;

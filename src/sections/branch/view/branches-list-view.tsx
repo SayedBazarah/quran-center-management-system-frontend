@@ -13,7 +13,7 @@ import { paths } from 'src/routes/paths';
 import { hasAnyRole } from 'src/utils/has-role';
 
 import axios, { endpoints } from 'src/lib/axios';
-import { useGetBranches } from 'src/actions/branch';
+import { useGetAllBranches } from 'src/actions/branch';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { GlobalPermissionCode } from 'src/global-config';
 
@@ -58,7 +58,7 @@ export default function BranchesListView() {
 
   const confirmDialog = useBoolean();
 
-  const { branches, refetch } = useGetBranches();
+  const { branches, refetch } = useGetAllBranches();
 
   const filters = useSetState<IBranchTableFilters>({ name: '' });
   const { state: currentFilters } = filters;
@@ -209,7 +209,7 @@ export default function BranchesListView() {
                         row={row}
                         selected={table.selected.includes(row.id.toString())}
                         // refetch={refetch}
-                        refetch={() => {}}
+                        refetch={() => { }}
                         onSelectRow={() => table.onSelectRow(row.id.toString())}
                         onDeleteRow={() => handleDeleteRow(row.id)}
                       />

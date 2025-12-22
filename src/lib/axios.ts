@@ -115,6 +115,7 @@ export const endpoints = {
   },
   admin: {
     list: '/admins?sort=name&limit=1000',
+    listAll: '/admins/all?sort=name&limit=1000',
     new: '/admins',
     update: '/admins/:id',
     delete: '/admins/:id',
@@ -127,6 +128,7 @@ export const endpoints = {
     permission: '/roles/permissions?sort=order&limit=1000',
   },
   branch: {
+    listAll: '/branches/all?sort=name&limit=1000',
     list: '/branches?sort=name&limit=1000',
     new: '/branches',
     update: '/branches/:id',

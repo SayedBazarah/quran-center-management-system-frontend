@@ -17,6 +17,30 @@ const swrOptions: SWRConfiguration = {
 
 // ----------------------------------------------------------------------
 
+export function useGetAllAdmins() {
+  const url = endpoints.admin.listAll;
+  const { data, isLoading, error, isValidating } = useSWR<{ data: IAdminItem[] }>(url, fetcher, {
+    ...swrOptions,
+  });
+
+  const refetchData = useCallback(() => {
+    mutate(url); // This will re-fetch the data from the same URL
+  }, [url]);
+
+  const memoizedValue = useMemo(
+    () => ({
+      admins: data?.data || [],
+      adminsLoading: isLoading,
+      adminsError: error,
+      adminsValidating: isValidating,
+      adminsEmpty: !isLoading && !isValidating && !data?.data?.length,
+      refetch: refetchData,
+    }),
+    [data?.data, error, isLoading, isValidating, refetchData]
+  );
+  return memoizedValue;
+}
+
 export function useGetAdmins() {
   const url = endpoints.admin.list;
   const { data, isLoading, error, isValidating } = useSWR<{ data: IAdminItem[] }>(url, fetcher, {

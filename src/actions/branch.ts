@@ -16,6 +16,30 @@ const swrOptions: SWRConfiguration = {
 
 // ----------------------------------------------------------------------
 
+export function useGetAllBranches() {
+  const url = endpoints.branch.listAll;
+  const { data, isLoading, error, isValidating } = useSWR<{ data: IRoleItem[] }>(url, fetcher, {
+    ...swrOptions,
+  });
+
+  const refetchData = useCallback(() => {
+    mutate(url); // This will re-fetch the data from the same URL
+  }, [url]);
+
+  const memoizedValue = useMemo(
+    () => ({
+      branches: data?.data || [],
+      branchesLoading: isLoading,
+      branchesError: error,
+      branchesValidating: isValidating,
+      branchesEmpty: !isLoading && !isValidating && !data?.data?.length,
+      refetch: refetchData,
+    }),
+    [data?.data, error, isLoading, isValidating, refetchData]
+  );
+  return memoizedValue;
+}
+
 export function useGetBranches() {
   const url = endpoints.branch.list;
   const { data, isLoading, error, isValidating } = useSWR<{ data: IRoleItem[] }>(url, fetcher, {
