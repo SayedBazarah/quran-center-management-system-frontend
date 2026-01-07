@@ -32,7 +32,6 @@ export type TeacherQuickEditSchemaType = zod.infer<typeof TeacherQuickEditSchema
 export const TeacherQuickEditSchema = zod.object({
   name: zod.string().min(1, { message: 'الاسم الدورة مطلوب!' }),
   email: zod.email({ message: 'البريد الإلكتروني غير صحيح!' }).nullable(),
-  username: zod.string({ message: ' الاسم المستخدم غير صحيح!' }),
   phone: schemaUtils.phoneNumber({ isValid: isValidPhoneNumber }),
   nationalId: zod
     .string()
@@ -63,7 +62,6 @@ export function TeacherQuickEditForm({ isNew = true, refetch, teacher, open, onC
     name: teacher?.name || '',
     email: teacher?.email || '',
     phone: teacher?.phone || '',
-    username: teacher?.username || '',
     gender: teacher?.gender || '',
     branchId: teacher?.branchId?.id || '',
     nationalId: teacher?.nationalId || '',
