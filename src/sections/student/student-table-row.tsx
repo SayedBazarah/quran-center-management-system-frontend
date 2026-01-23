@@ -225,7 +225,7 @@ export function StudentTableRow({
               const startDate = new Date(enrollment.startDate as string);
 
               const endDate = new Date(startDate);
-              endDate.setDate(endDate.getDate() + 30);
+              endDate.setDate(startDate.getDate() + (enrollment.courseId?.duration || 0));
 
               return (
                 <Box
