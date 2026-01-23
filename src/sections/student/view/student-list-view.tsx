@@ -65,7 +65,7 @@ import { StudentQuickEditForm } from '../student-edit-new-form';
 import { StudentTableFiltersResult } from '../student-table-filters-result';
 
 const TABLE_HEAD: TableHeadCellProps[] = [
-  { id: 'name', label: 'الاسم' },
+  { id: 'student.name', label: 'الاسم' },
   { id: 'rounds', label: 'عدد المراحل', width: 100 },
   { id: 'currentRound', label: 'المراحل الحالية', width: 100 },
   { id: 'teacherId', label: 'المدرس', width: 80 },
@@ -418,7 +418,7 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
   inputData = stabilizedThis.map((el) => el[0]);
 
   if (admin.length) {
-    inputData = inputData.filter((row) => admin.includes(row.student?.adminId?.id));
+    inputData = inputData.filter((row) => admin.includes(row.currentEnrollment?.adminId?.id ?? ''));
   }
 
   // if (teacher.length) {
