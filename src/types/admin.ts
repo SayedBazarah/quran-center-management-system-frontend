@@ -1,4 +1,5 @@
 export interface IAdminItem {
+  _id: string;
   id: string;
   avatar: string;
   name: string;

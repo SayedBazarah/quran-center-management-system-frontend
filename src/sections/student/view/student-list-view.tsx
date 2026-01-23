@@ -417,9 +417,6 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
 
   inputData = stabilizedThis.map((el) => el[0]);
 
-  if (admin.length) {
-    inputData = inputData.filter((row) => admin.includes(row.currentEnrollment?.adminId?.id ?? ''));
-  }
 
   // if (teacher.length) {
   //   inputData = inputData.filter((row) => teacher.includes(`${row.enrollments?.teacherId}`));
@@ -431,6 +428,10 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
 
   if (status !== 'all') {
     inputData = inputData.filter((row) => row.student?.status === status);
+  }
+
+  if (admin.length) {
+    inputData = inputData.filter((row) => admin.includes(`${row.currentEnrollment?.adminId?._id}`));
   }
 
   if (teacher.length) {
