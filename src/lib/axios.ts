@@ -71,6 +71,10 @@ export const endpoints = {
     list: '/students?all=true',
     update: '/students/:id',
     delete: '/students/:id',
+    fire: '/students/:id/fire',
+    reactive: '/students/:id/reactive',
+    logs: '/students/:id/logs',
+
     // -------------------
     pendingList: '/students/status/pending/list?sort=name&limit=1000',
     status: '/students/:id/status',

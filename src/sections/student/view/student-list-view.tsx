@@ -156,6 +156,24 @@ export function StudentListView() {
     [dataInPage.length, table, refetch]
   );
 
+  const handleFireRow = useCallback(
+    async (studentId: string, reason: string) => {
+      await axios.post(endpoints.student.fire.replace(':id', studentId), { reason });
+      toast.success('تم فصل الطالب بنجاح!');
+      refetch();
+    },
+    [refetch]
+  );
+
+  const handleReactiveRow = useCallback(
+    async (studentId: string) => {
+      await axios.post(endpoints.student.reactive.replace(':id', studentId));
+      toast.success('تم اعادة قيد الطالب بنجاح!');
+      refetch();
+    },
+    [refetch]
+  );
+
   const handleDeleteRows = useCallback(() => {
     toast.success('تم المسح بنجاح!');
 
@@ -197,7 +215,7 @@ export function StudentListView() {
     },
     {
       value: 'dropout',
-      label: 'ترك المركز',
+      label: 'مفصول',
       color: 'default',
       count: getStudentStatusLength(StudentStatus.DROPOUT),
     },
@@ -361,6 +379,8 @@ export function StudentListView() {
                         refetch={refetch}
                         onSelectRow={() => table.onSelectRow(row.student.id)}
                         onDeleteRow={() => handleDeleteRow(row.student.id)}
+                        onFireRow={(reason) => handleFireRow(row.student.id, reason)}
+                        onReactiveRow={() => handleReactiveRow(row.student.id)}
                         editHref={paths.dashboard.student.details.replace(':id', row.student.id)}
                       />
                     ))}

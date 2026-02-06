@@ -25,6 +25,7 @@ import { NotFoundView } from 'src/sections/error';
 import { useAuthContext } from 'src/auth/hooks';
 
 import StudentDetails from '../student-details';
+import StudentLogsList from '../student-logs-list';
 import { NewEnrollmentForm } from '../new-enrollemtn-form';
 import StudentEnrollments from '../student-enrollments-list';
 
@@ -49,6 +50,11 @@ const NAV_ITEMS = [
     value: 'enrollments',
     label: 'الدورات',
     icon: <Iconify width={24} icon="ic:round-view-list" />,
+  },
+  {
+    value: 'logs',
+    label: 'سجل الطالب',
+    icon: <Iconify width={24} icon="solar:file-text-bold" />,
   },
 ];
 
@@ -145,6 +151,7 @@ export function StudentDetailsView({ id }: Props) {
           <StudentParentForm refetch={refetch} studentId={student.id} parent={student.parent} />
         )} */}
         {selectedTab === 'enrollments' && <StudentEnrollments student={student} />}
+        {selectedTab === 'logs' && <StudentLogsList student={student} />}
       </Card>
 
       {newEnrollment.value && (

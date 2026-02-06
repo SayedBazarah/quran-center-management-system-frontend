@@ -1,5 +1,7 @@
 import type { IEnrollmentWithStudent } from 'src/types/student';
 
+import { useState } from 'react';
+import { varAlpha } from 'minimal-shared/utils';
 import { useBoolean, usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
@@ -11,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
+import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import { Chip, Paper, Collapse } from '@mui/material';
 
@@ -22,7 +25,7 @@ import { Iconify } from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomPopover } from 'src/components/custom-popover';
 
-import { EnrollmentStatus } from 'src/types/student';
+import { StudentStatus, EnrollmentStatus } from 'src/types/student';
 
 import { NewEnrollmentForm } from './new-enrollemtn-form';
 
@@ -37,6 +40,8 @@ type Props = {
   editHref: string;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
+  onFireRow: (reason: string) => void;
+  onReactiveRow: VoidFunction;
   refetch: VoidFunction;
 };
 
@@ -46,10 +51,14 @@ export function StudentTableRow({
   editHref,
   onSelectRow,
   onDeleteRow,
+  onFireRow,
+  onReactiveRow,
 }: Props) {
   const collapseRow = useBoolean();
   const menuActions = usePopover();
   const confirmDialog = useBoolean();
+  const fireDialog = useBoolean();
+  const [fireReason, setFireReason] = useState('');
   const newEnrollmentForm = useBoolean();
 
   const renderAddEnrollmentForm = () => (
@@ -85,6 +94,29 @@ export function StudentTableRow({
             التسجيل بمرحلة تعليمية
           </MenuItem>
         </li>
+        <li>
+          {`${row.student?.status}` === StudentStatus.DROPOUT ? (
+            <MenuItem
+              onClick={() => {
+                onReactiveRow();
+                menuActions.onClose();
+              }}
+            >
+              <Iconify icon="mingcute:add-line" />
+              اعادة قيد الطالب
+            </MenuItem>
+          ) : (
+            <MenuItem
+              onClick={() => {
+                fireDialog.onTrue();
+                menuActions.onClose();
+              }}
+            >
+              <Iconify icon="mingcute:add-line" />
+              فصل الطالب
+            </MenuItem>
+          )}
+        </li>
 
         <MenuItem
           onClick={() => {
@@ -113,11 +145,50 @@ export function StudentTableRow({
     />
   );
 
+  const renderFireDialog = () => (
+    <ConfirmDialog
+      open={fireDialog.value}
+      onClose={() => {
+        fireDialog.onFalse();
+        setFireReason('');
+      }}
+      title="فصل الطالب"
+      content={
+        <>
+          هل تريد فصل هذا الطالب؟
+          <TextField
+            fullWidth
+            multiline
+            rows={3}
+            label="سبب الفصل"
+            value={fireReason}
+            onChange={(e) => setFireReason(e.target.value)}
+            sx={{ mt: 2 }}
+          />
+        </>
+      }
+      action={
+        <Button
+          variant="contained"
+          color="warning"
+          onClick={() => {
+            onFireRow(fireReason);
+            fireDialog.onFalse();
+            setFireReason('');
+          }}
+        >
+          فصل
+        </Button>
+      }
+    />
+  );
+
   const renderPrimaryRow = () => (
     <TableRow hover selected={selected} aria-checked={selected} tabIndex={-1}
-      sx={{
+      sx={(theme) => ({
         ...(`${row.currentEnrollment?.status}` === EnrollmentStatus.LATE) && { backgroundColor: 'rgba(255, 0, 0, 0.08)' },
-      }}>
+        ...(`${row.student?.status}` === StudentStatus.DROPOUT) && { backgroundColor: varAlpha(theme.vars.palette.warning.mainChannel, 0.08) },
+      })}>
       <TableCell padding="checkbox">
         <Checkbox
           checked={selected}
@@ -324,6 +395,7 @@ export function StudentTableRow({
       {renderAddEnrollmentForm()}
       {renderMenuActions()}
       {renderConfirmDialog()}
+      {renderFireDialog()}
     </>
   );
 }
