@@ -3,7 +3,7 @@ import type { IStudentItem } from 'src/types/student';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Alert, Button, Stack, Typography } from '@mui/material';
+import { Alert, Stack, Button, Typography } from '@mui/material';
 
 import axios, { endpoints } from 'src/lib/axios';
 

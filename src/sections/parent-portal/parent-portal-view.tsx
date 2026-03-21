@@ -16,9 +16,11 @@ import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { Form, Field } from 'src/components/hook-form';
 import axiosInstance, { endpoints } from 'src/lib/axios';
-import { EnrollmentStatusLabels, type IEnrollmentItem, type IStudentItem, type IParentItem } from 'src/types/student';
+
+import { Form, Field } from 'src/components/hook-form';
+
+import { type IParentItem, type IStudentItem, type IEnrollmentItem, EnrollmentStatusLabels } from 'src/types/student';
 
 // ----------------------------------------------------------------------
 

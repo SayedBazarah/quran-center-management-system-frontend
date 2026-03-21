@@ -100,7 +100,7 @@ export default function StudentParentQR({ studentId, studentName }: Props) {
 
       <Button
         variant="outlined"
-        startIcon={<Iconify icon="solar:printer-bold" />}
+        startIcon={<Iconify icon="solar:printer-minimalistic-bold" />}
         onClick={handlePrint}
       >
         طباعة رمز QR

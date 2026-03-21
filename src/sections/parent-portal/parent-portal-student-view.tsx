@@ -12,12 +12,14 @@ import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 
 import { fetcher, endpoints } from 'src/lib/axios';
+
 import { LoadingScreen } from 'src/components/loading-screen';
+
 import {
-  EnrollmentStatusLabels,
-  type IEnrollmentItem,
-  type IStudentItem,
   type IParentItem,
+  type IStudentItem,
+  type IEnrollmentItem,
+  EnrollmentStatusLabels,
 } from 'src/types/student';
 
 // ----------------------------------------------------------------------
