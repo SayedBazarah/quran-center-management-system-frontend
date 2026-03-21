@@ -26,6 +26,8 @@ import { useAuthContext } from 'src/auth/hooks';
 
 import StudentDetails from '../student-details';
 import StudentLogsList from '../student-logs-list';
+import StudentNotesTab from '../student-notes-tab';
+import StudentParentQR from '../student-parent-qr';
 import { NewEnrollmentForm } from '../new-enrollemtn-form';
 import StudentEnrollments from '../student-enrollments-list';
 
@@ -55,6 +57,16 @@ const NAV_ITEMS = [
     value: 'logs',
     label: 'سجل الطالب',
     icon: <Iconify width={24} icon="solar:file-text-bold" />,
+  },
+  {
+    value: 'notes',
+    label: 'ملاحظات',
+    icon: <Iconify width={24} icon="solar:notes-bold" />,
+  },
+  {
+    value: 'parent-qr',
+    label: 'QR ولي الأمر',
+    icon: <Iconify width={24} icon="solar:qr-code-bold" />,
   },
 ];
 
@@ -152,6 +164,10 @@ export function StudentDetailsView({ id }: Props) {
         )} */}
         {selectedTab === 'enrollments' && <StudentEnrollments student={student} />}
         {selectedTab === 'logs' && <StudentLogsList student={student} />}
+        {selectedTab === 'notes' && <StudentNotesTab student={student} refetch={refetch} />}
+        {selectedTab === 'parent-qr' && (
+          <StudentParentQR studentId={student.id} studentName={student.name} />
+        )}
       </Card>
 
       {newEnrollment.value && (

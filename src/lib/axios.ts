@@ -70,6 +70,7 @@ export const endpoints = {
     new: '/students',
     list: '/students?all=true',
     update: '/students/:id',
+    parentNote: '/students/:id/parent-note',
     delete: '/students/:id',
     fire: '/students/:id/fire',
     reactive: '/students/:id/reactive',
@@ -137,5 +138,9 @@ export const endpoints = {
     new: '/branches',
     update: '/branches/:id',
     delete: '/branches/:id',
+  },
+  parentPortal: {
+    lookup: '/parent-portal/lookup',
+    student: '/parent-portal/student/:studentId',
   },
 };

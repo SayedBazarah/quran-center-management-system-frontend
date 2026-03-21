@@ -9,6 +9,8 @@ const ROOTS = {
 
 export const paths = {
   faqs: '/faqs',
+  parentPortal: '/parent-portal',
+  parentPortalStudent: '/parent-portal/student',
   minimalStore: 'https://mui.com/store/items/minimal-dashboard/',
   // AUTH
   auth: {

@@ -50,6 +50,7 @@ export interface IStudentItem {
   branchId: IBranchItem;
   enrollments: IEnrollmentItem[];
   parent: IParentItem;
+  parentNote?: string;
   fired: boolean;
   firedAt: string;
   firedBy: IAdminItem;

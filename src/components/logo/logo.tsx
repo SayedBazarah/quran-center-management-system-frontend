@@ -17,7 +17,7 @@ import { logoClasses } from './classes';
 
 export type LogoProps = LinkProps & {
   isSingle?: boolean;
-  disabled?: boolean;
+  disabled?: boolean; 
 };
 
 export function Logo({
